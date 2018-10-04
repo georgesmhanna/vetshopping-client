@@ -25,6 +25,9 @@ import { AppService } from './app.service';
 import { AppInterceptor } from './theme/utils/app-interceptor';
 import { OptionsComponent } from './theme/components/options/options.component';
 import { FooterComponent } from './theme/components/footer/footer.component';
+import {ErrorInterceptor} from './helpers/error.interceptor';
+import {JwtInterceptor} from './helpers/jwt.interceptor';
+import {AuthenticationService} from './services/authentication.service';
 
 
 @NgModule({
@@ -52,10 +55,13 @@ import { FooterComponent } from './theme/components/footer/footer.component';
   ], 
   providers: [
     AppSettings,
-    AppService,   
+    AppService,
+    AuthenticationService,
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
     { provide: MAT_MENU_SCROLL_STRATEGY, useFactory: menuScrollStrategy, deps: [Overlay] },
-    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }
+      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

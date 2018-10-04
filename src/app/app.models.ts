@@ -21,3 +21,11 @@ export class Product {
               public weight: number,
               public categoryId: number){ }
 }
+
+export class User{
+    constructor(public firstName: string,
+                public lastName: string,
+                public email: string,
+                public username: string,
+                public password: string) {}
+}

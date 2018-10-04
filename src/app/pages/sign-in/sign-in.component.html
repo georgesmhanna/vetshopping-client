@@ -9,12 +9,12 @@
                     <mat-error *ngIf="loginForm.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
                 </mat-form-field>
                 <mat-form-field class="w-100 mt-1">
-                    <input matInput placeholder="Password" formControlName="password" required>
+                    <input matInput type="password" placeholder="Password" formControlName="password" required>
                     <mat-error *ngIf="loginForm.controls.password.errors?.required">Password is required</mat-error>
                     <mat-error *ngIf="loginForm.controls.password.hasError('minlength')">Password isn't long enough, minimum of 6 characters</mat-error>
                 </mat-form-field> 
                 <div class="text-center mt-2">
-                    <button mat-fab color="primary" class="mat-elevation-z6" (click)="onLoginFormSubmit(loginForm.value)">
+                    <button type="button" mat-fab color="primary" class="mat-elevation-z6" (click)="onLoginFormSubmit(loginForm.value)">
                         <mat-icon>exit_to_app</mat-icon>
                     </button>
                 </div> 
@@ -43,9 +43,19 @@
             <h2 class="text-muted text-center">Don't have an account? Sign up now!</h2>
             <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
                 <mat-form-field class="w-100 mt-2">
-                  <input matInput placeholder="Full Name" formControlName="name" required>
-                  <mat-error *ngIf="registerForm.controls.name.errors?.required">Full Name is required</mat-error>
-                  <mat-error *ngIf="registerForm.controls.name.hasError('minlength')">Full Name isn't long enough, minimum of 3 characters</mat-error>
+                <input matInput placeholder="First Name" formControlName="firstName" required>
+                <mat-error *ngIf="registerForm.controls.firstName.errors?.required">First Name is required</mat-error>
+                <mat-error *ngIf="registerForm.controls.firstName.hasError('minlength')">First Name isn't long enough, minimum of 1 characters</mat-error>
+            </mat-form-field>
+                <mat-form-field class="w-100 mt-2">
+                    <input matInput placeholder="Last Name" formControlName="lastName" required>
+                    <mat-error *ngIf="registerForm.controls.lastName.errors?.required">Last Name is required</mat-error>
+                    <mat-error *ngIf="registerForm.controls.lastName.hasError('minlength')">Last Name isn't long enough, minimum of 1 characters</mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100 mt-2">
+                    <input matInput placeholder="Username" formControlName="username" required>
+                    <mat-error *ngIf="registerForm.controls.username.errors?.required">Username is required</mat-error>
+                    <mat-error *ngIf="registerForm.controls.username.hasError('minlength')">Username isn't long enough, minimum of 1 characters</mat-error>
                 </mat-form-field>
                 <mat-form-field class="w-100 mt-1">
                     <input matInput placeholder="Email" formControlName="email" required>
@@ -63,7 +73,7 @@
                   <mat-error *ngIf="registerForm.controls.confirmPassword.hasError('mismatchedPasswords')">Passwords do not match</mat-error>
                 </mat-form-field>
                 <div class="text-center mt-2">
-                    <button mat-fab color="primary" class="mat-elevation-z6" (click)="onRegisterFormSubmit(registerForm.value)">
+                    <button type="button" mat-fab color="primary" class="mat-elevation-z6" (click)="onRegisterFormSubmit(registerForm.value)">
                         <mat-icon>person_add</mat-icon>
                     </button>
                 </div>
