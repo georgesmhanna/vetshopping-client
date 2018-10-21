@@ -4,6 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AgmCoreModule } from '@agm/core';
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angularx-social-login";
+import { getAuthServiceConfigs } from "./socialloginConfig";
+
 
 import { OverlayContainer, Overlay } from '@angular/cdk/overlay';
 import { MAT_MENU_SCROLL_STRATEGY } from '@angular/material';
@@ -40,7 +43,8 @@ import {AuthenticationService} from './services/authentication.service';
       apiKey: 'AIzaSyB3HQ_Gk_XRt6KitPdiHQNGpVn0NDwQGMI'
     }),
     SharedModule,
-    routing
+    routing,
+       SocialLoginModule
   ],
   declarations: [
     AppComponent,
@@ -51,7 +55,7 @@ import {AuthenticationService} from './services/authentication.service';
     SidenavMenuComponent,
     BreadcrumbComponent,
     OptionsComponent,
-    FooterComponent    
+    FooterComponent,
   ], 
   providers: [
     AppSettings,
@@ -61,7 +65,11 @@ import {AuthenticationService} from './services/authentication.service';
     { provide: MAT_MENU_SCROLL_STRATEGY, useFactory: menuScrollStrategy, deps: [Overlay] },
       { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+      {
+          provide: AuthServiceConfig,
+          useFactory: getAuthServiceConfigs
+      }
   ],
   bootstrap: [AppComponent]
 })

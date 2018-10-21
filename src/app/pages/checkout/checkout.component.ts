@@ -26,7 +26,7 @@ export class CheckoutComponent implements OnInit {
     this.appService.Data.cartList.forEach(product=>{
       this.grandTotal += product.newPrice;
     });
-    this.countries = this.appService.getCountries();
+    // this.countries = this.appService.getCountries();
     this.months = this.appService.getMonths();
     this.years = this.appService.getYears();
     this.deliveryMethods = this.appService.getDeliveryMethods();

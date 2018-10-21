@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Data, AppService } from '../../../app.service';
+import { AppService } from '../../../app.service';
+import {AuthenticationService} from '../../../services/authentication.service';
+import {AuthService} from 'angularx-social-login';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-top-menu',
@@ -16,12 +19,17 @@ export class TopMenuComponent implements OnInit {
     { name:'Turkish', image: 'assets/images/flags/tr.svg' }
   ]
   public flag:any;
-
-  constructor(public appService:AppService) { }
+  public user: any;
+  public loggedIn$: Observable<boolean>;
+    public user$: Observable<any>;
+  constructor(public appService:AppService, private authenticationService: AuthenticationService, private socialAuthenticationService: AuthService) {
+      this.loggedIn$ = this.authenticationService.isLoggedIn();
+      this.user$ = this.authenticationService.getUser();
+  }
 
   ngOnInit() {
     this.currency = this.currencies[0];
-    this.flag = this.flags[0];    
+    this.flag = this.flags[0];
   }
 
   public changeCurrency(currency){
@@ -31,7 +39,4 @@ export class TopMenuComponent implements OnInit {
   public changeLang(flag){
     this.flag = flag;
   }
-
-  
-
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-account',
@@ -16,7 +17,9 @@ export class AccountComponent implements OnInit {
     { name: 'Order History', href: 'orders', icon: 'add_shopping_cart' },  
     { name: 'Logout', href: '/sign-in', icon: 'power_settings_new' },    
   ];
-  constructor(public router:Router) { }
+  constructor(public router:Router, private authService: AuthenticationService) {
+
+  }
 
   ngOnInit() {
     if(window.innerWidth < 960){
