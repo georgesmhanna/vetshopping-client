@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../app.service';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {AuthService} from 'angularx-social-login';
+import { faDog } from '@fortawesome/free-solid-svg-icons';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -22,7 +22,8 @@ export class TopMenuComponent implements OnInit {
   public user: any;
   public loggedIn$: Observable<boolean>;
     public user$: Observable<any>;
-  constructor(public appService:AppService, private authenticationService: AuthenticationService, private socialAuthenticationService: AuthService) {
+    public faDog = faDog;
+  constructor(public appService:AppService, private authenticationService: AuthenticationService) {
       this.loggedIn$ = this.authenticationService.isLoggedIn();
       this.user$ = this.authenticationService.getUser();
   }

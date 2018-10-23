@@ -6,6 +6,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AgmCoreModule } from '@agm/core';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angularx-social-login";
 import { getAuthServiceConfigs } from "./socialloginConfig";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 import { OverlayContainer, Overlay } from '@angular/cdk/overlay';
@@ -44,7 +45,8 @@ import {AuthenticationService} from './services/authentication.service';
     }),
     SharedModule,
     routing,
-       SocialLoginModule
+       SocialLoginModule,
+       FontAwesomeModule
   ],
   declarations: [
     AppComponent,

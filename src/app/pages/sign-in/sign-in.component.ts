@@ -49,7 +49,6 @@ export class SignInComponent implements OnInit {
       // reset login status
       this.authenticationService.logout();
 
-      this.socialAuthenticationService.signOut();
       // get return url from route parameters or default to '/'
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 

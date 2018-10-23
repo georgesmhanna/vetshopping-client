@@ -29,7 +29,7 @@ export class AppService {
     constructor(public http:HttpClient, public snackBar: MatSnackBar) { }
     
     public getCategories(): Observable<Category[]>{
-        return this.http.get<Category[]>(this.url + 'categories');
+        return this.http.get<Category[]>(this.url + 'categories.json');
     }
    
     public getProducts(type): Observable<Product[]>{        
@@ -140,6 +140,16 @@ export class AppService {
             { value: 'standard', name: 'Standard Delivery', desc: '$7.99 / Delivery in 5 to 7 business Days' },
             { value: 'express', name: 'Express Delivery', desc: '$29.99 / Delivery in 1 business Days' }
         ];
+    }
+
+    public sendEmail(email){
+        return this.http.post<any>(`${environment.apiUrl}/email`, {
+            to: email.to,
+            replyTo: email.replyTo,
+            subject: email.subject,
+            text: email.text,
+            html: email.html
+        });
     }
 
 } 

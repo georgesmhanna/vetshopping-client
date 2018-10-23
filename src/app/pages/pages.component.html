@@ -33,7 +33,7 @@
             <app-top-menu></app-top-menu>       
         </mat-toolbar-row>
         <mat-toolbar-row fxLayoutAlign="space-between center" class="logo-toolbar theme-container">
-            <a class="logo" routerLink="/" (click)="closeSubMenus()">Vet Shopping</a>
+            <a class="logo" routerLink="/" (click)="closeSubMenus()">Vet Village</a>
             <div fxFlex fxFlexOffset.gt-sm="10" fxShow="false" fxShow.gt-sm>
                 <form method="get"  class="search-form" fxLayout="row">
                     <button mat-raised-button [matMenuTriggerFor]="categoriesMenu" #categoriesMenuTrigger="matMenuTrigger" type="button" class="mat-elevation-z0 categories text-truncate text-muted">{{category?.name}}<mat-icon>arrow_drop_down</mat-icon></button>

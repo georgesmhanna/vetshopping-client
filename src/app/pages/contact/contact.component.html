@@ -47,7 +47,7 @@
         </div>
         <div fxFlex="100" class="px-1 mt-1">
           <mat-form-field class="w-100">
-              <input matInput placeholder="Message" formControlName="message" required>
+              <textarea matInput placeholder="Message" formControlName="message" required></textarea>
               <mat-error *ngIf="contactForm.controls.message.errors?.required">Message is required</mat-error>
           </mat-form-field>
         </div> 

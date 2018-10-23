@@ -25,7 +25,7 @@
     <!--</mat-menu>-->
 
     <span fxShow="false" fxShow.gt-sm>
-        <!--<a mat-button routerLink="/compare">Compare  ({{ appService.Data.compareList.length}})</a>-->
+        <a mat-button routerLink="/contact">Contact us or Request a veterinary service</a>
         <a mat-button routerLink="/wishlist">Wishlist ({{appService.Data.wishList.length}})</a>
 
     </span>
@@ -52,6 +52,12 @@
                 <!--<mat-icon class="mat-icon-sm">compare</mat-icon>-->
                 <!--<span>Compare ({{appService.Data.compareList.length}})</span>-->
             <!--</a>-->
+
+            <a mat-menu-item routerLink="/contact" fxHide="false" fxHide.gt-sm >
+                <mat-icon class="mat-icon-sm">phone</mat-icon>
+                <span>Contact us</span>
+            </a>
+
             <a mat-menu-item routerLink="/wishlist" fxHide="false" fxHide.gt-sm>
                 <mat-icon class="mat-icon-sm">favorite</mat-icon>
                 <span>Wishlist ({{appService.Data.wishList.length}})</span>
@@ -60,10 +66,11 @@
                 <mat-icon class="mat-icon-sm">lock</mat-icon>
                 <span>Lock screen</span>
             </a>
-            <a mat-menu-item routerLink="/contact">
-                <mat-icon class="mat-icon-sm">help</mat-icon>
-                <span>Help</span>
-            </a>
+            <!--<a mat-menu-item routerLink="/contact">-->
+                <!--&lt;!&ndash;<mat-icon class="mat-icon-sm">animal</mat-icon>&ndash;&gt;-->
+                <!--<fa-icon [icon]="faDog" class="mat-icon-sm"></fa-icon>-->
+                <!--<span>Request Veterinary Service</span>-->
+            <!--</a>-->
             <div class="divider"></div>
             <a mat-menu-item routerLink="/sign-in">
                 <mat-icon class="mat-icon-sm">power_settings_new</mat-icon>
