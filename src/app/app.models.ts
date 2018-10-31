@@ -1,8 +1,10 @@
 export class Category {
+    parent: any;
   constructor(public id: number, 
               public name:string, 
               public hasSubCategory: boolean,
-              public parentId: number){ }
+              public parentId: number,
+              public subCategories: Array<Category>){ }
 }
 
 export class Product {
@@ -16,8 +18,8 @@ export class Product {
               public ratingsValue: number,
               public description: string,
               public availibilityCount: number,
-              public color: Array<string>,
-              public size: Array<string>,
+              public colors: Array<any>,
+              public sizes: Array<any>,
               public weight: number,
               public categoryId: number){ }
 }

@@ -11,7 +11,7 @@
                 <div class="swiper-wrapper"> 
                     <div *ngFor="let image of product?.images" class="swiper-slide">
                         <mat-card (click)="selectImage(image)" class="p-1">
-                            <img [attr.data-src]="image.small" class="swiper-lazy"/>
+                            <img [attr.data-src]="apiUrl+image.url" class="swiper-lazy"/>
                             <div class="swiper-lazy-preloader"></div>
                         </mat-card>
                     </div>                    
@@ -32,24 +32,29 @@
         <h2>{{product?.name}}</h2>
         <div class="py-1 lh">
             <p><span class="text-muted fw-500">Category: </span><span>{{ ( appService.Data.categories | filterById : product?.categoryId )?.name }}</span></p>
-            <p><span class="text-muted fw-500">Availibility: </span><span>{{ (product?.availibilityCount > 0) ? 'In stock':'Unavailable'}}</span></p>
+            <p><span class="text-muted fw-500">Availability: </span><span>{{ (product?.availibilityCount > 0) ? 'In stock':'Unavailable'}}</span></p>
         </div>                 
-        <div class="py-1">
-            <app-rating [ratingsCount]="product?.ratingsCount" [ratingsValue]="product?.ratingsValue" [direction]="'row'"></app-rating>
-        </div>
+        <!--<div class="py-1">-->
+            <!--<app-rating [ratingsCount]="product?.ratingsCount" [ratingsValue]="product?.ratingsValue" [direction]="'row'"></app-rating>-->
+        <!--</div>-->
         <p class="py-1 text-muted lh">{{product?.description}}</p>
 
         <div class="divider mt-1"></div>
         <h2 class="py-2 new-price">${{product?.newPrice}}</h2>
 
         <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" class="details text-muted py-1">
-            <div *ngIf="product?.color" class="color">
+            <div *ngIf="product?.colors" class="color">
                 <span class="fw-500">Select Color:</span>
-                <button mat-raised-button *ngFor="let color of product?.color" [style.background]="color">&nbsp;</button>              
+                <!--<button mat-raised-button *ngFor="let color of product?.colors" [style.background]="color.name" (click)="setColor(color.name, $event)">&nbsp;</button>-->
+                <mat-button-toggle-group #group="matButtonToggleGroup">
+                <mat-button-toggle *ngFor="let color of product?.colors" [style.background]="color.name">&nbsp;</mat-button-toggle>
+                </mat-button-toggle-group>
             </div>
-            <div *ngIf="product?.size" class="size" ngClass.xs="mt-1">
+            <div *ngIf="product?.sizes" class="size" ngClass.xs="mt-1">
                 <span class="fw-500">Select Size:</span>
-                <button mat-raised-button *ngFor="let size of product?.size">{{size}}</button>
+                <mat-button-toggle-group #group="matButtonToggleGroup">
+                <mat-button-toggle *ngFor="let size of product?.sizes" [value]="size" (click)="updatePrice(size)">{{size.name}}</mat-button-toggle>
+                </mat-button-toggle-group>
             </div>
         </div>
 
@@ -100,7 +105,7 @@
                     <mat-icon class="mat-icon-xlg text-muted m-0">history</mat-icon>
                     <div class="content">
                         <p>ONLINE SUPPORT 24/7</p> 
-                        <span class="text-muted m-0">Call us: (+100) 123 456 7890</span>
+                        <span class="text-muted m-0">Call us: +961 3 842506</span>
                     </div> 
                 </mat-card>
             </div>
@@ -109,137 +114,8 @@
     </div>
 </div>
 
-<div fxLayout="row wrap" class="mt-2">
-    <div fxFlex="100" fxFlex.gt-md="78" fxFlex.md="74">
-        <mat-card> 
-            <mat-tab-group [@.disabled]="true" [selectedIndex]="0">       
-                <mat-tab label="Description">
-                    <div class="full-desc lh">
-                        <p>The most powerful Bose noise cancelling headphones yet.
-                            Clear away the distractions of the world, and focus on what matters most. Go deeper into your music, work, and passions — with no noise in the way. Plus with Amazon Alexa, you can enjoy entertainment, get information, and manage your day. Just ask.</p>
-                        <ul class="px-2 mt-1">
-                            <li>Noise-rejecting dual-microphone system for clear phone calls and voice activation, which now includes Amazon Alexa. Simply update your software via the Bose Connect App and you will have the ability to hit the Action button to access hands-free voice control. You can also use the Action button to adjust the level of noise cancellation.</li>
-                            <li>Three levels of world-class noise cancellation for better listening experience in any environment. Alexa-enabled for voice access to music, information and more</li>
-                            <li>Up to 20 hours of wireless play time from a rechargeable lithium-ion battery; up to 40 hours of listening in wired mode</li>
-                            <li>Balanced audio performance at any volume. Frequency band of operation 2400 to 2480 MHz. Bluetooth maximum transmit power less than 20 dBm wirp</li>
-                            <li>Hassle-free Bluetooth pairing, personalized settings, access to future updates and more through the Bose Connect app</li>
-                            <li>Note-poor sound quality can be corrected using a different music source or connect another mobile device or disconnect the second device or move your mobile device closer to the headphones and away from any interference or obstructions</li>
-                        </ul>
-                        <!--<p class="mt-1">Duis eu felis ultricies urna pharetra efficitur nec non elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur posuere eu justo eget mollis. Sed semper accumsan urna vel rutrum. Nulla condimentum quis lacus ut semper. Quisque at massa pretium, porta ligula ut, rutrum elit. Pellentesque et orci sit amet dolor laoreet tempor sed eu sem. Morbi lacinia pellentesque tellus euismod eleifend.</p>-->
-                        <!--<p class="mt-1">Quisque fringilla eros id ligula luctus, a gravida augue sodales. Sed eget augue ut lectus condimentum volutpat. Morbi quis nunc viverra, gravida arcu quis, varius metus. Praesent tincidunt ipsum est, quis molestie ligula efficitur ut. Nunc interdum erat eu tortor maximus suscipit. Vivamus nec laoreet dui. Nullam dignissim laoreet metus quis pretium.</p>-->
-                    </div>
-                </mat-tab>
-                <mat-tab label="Additional information">
-                    <div class="full-desc lh">
-                        <p>The most powerful Bose noise cancelling headphones yet.
-                            Clear away the distractions of the world, and focus on what matters most. Go deeper into your music, work, and passions — with no noise in the way. Plus with Amazon Alexa, you can enjoy entertainment, get information, and manage your day. Just ask.</p>
-                        <ul class="px-2 mt-1">
-                            <li>Premium speakers with Dolby processing let you stream music and books in crisp, stereo sound. With a vibrant 10.1" HD screen for watching videos, movies, and TV shows—in a new fabric design.</li>
-                            <li>Three levels of world-class noise cancellation for better listening experience in any environment. Alexa-enabled for voice access to music, information and more</li>
-                            <li>Up to 20 hours of wireless play time from a rechargeable lithium-ion battery; up to 40 hours of listening in wired mode</li>
-                            <li>Balanced audio performance at any volume. Frequency band of operation 2400 to 2480 MHz. Bluetooth maximum transmit power less than 20 dBm wirp</li>
-                            <li>Hassle-free Bluetooth pairing, personalized settings, access to future updates and more through the Bose Connect app</li>
-                            <li>Note-poor sound quality can be corrected using a different music source or connect another mobile device or disconnect the second device or move your mobile device closer to the headphones and away from any interference or obstructions</li>
-                        </ul>
-                        <ul class="px-2 mt-1">
-                            <li>Premium speakers with Dolby processing let you stream music and books in crisp, stereo sound. With a vibrant 10.1" HD screen for watching videos, movies, and TV shows—in a new fabric design.</li>
-                            <li>Ask Alexa to see lyrics and album art with Amazon Music. See weather forecasts, calendars, to-do lists, and your favorite playlists.</li>
-                            <li>Watch live TV and sports with a Hulu subscription, movies and shows from Prime Video, or music videos from Vevo.</li>
-                            <li>Make video calls to anyone with the Alexa app, an Echo Spot, or Echo Show. (Skype coming soon!)</li>
-                            <li>Your new kitchen companion—watch recipe videos, set timers and alarms, and add items to your shopping list.</li>
-                            <li>With eight microphones and far-field technology, Alexa can hear you even while music is playing.</li>
-                        </ul>
-                    </div>
-                
-
-                </mat-tab>
-                <mat-tab label="Reviews">
-                    <div class="full-desc lh">
-                        <mat-list class="reviews">
-                            <mat-list-item class="h-100 py-1">
-                                <img matListAvatar [src]="'assets/images/avatars/avatar-1.png'" alt="image" class="review-author">
-                                <p matLine fxLayoutAlign="start center">
-                                    <span class="fw-500">Elie Yazbeck</span>
-                                    <mat-icon class="text-muted px-1" matTooltip="Dissatisfied" matTooltipPosition="after">sentiment_dissatisfied</mat-icon>
-                                </p>
-                                <p matLine class="text-muted"><small>13 January, 2018 at 7:09</small></p>
-                                <p matLine class="text">My sister love the bag, thank you seller. I really recommend this seller, 5 star to the seller for fast respond & help me asap when i need to change address same day after i purchase it cuz had to send it to my hometown in papua to my sister.</p>
-                            </mat-list-item>
-                            <mat-list-item class="h-100 py-1">
-                                <img matListAvatar [src]="'assets/images/avatars/avatar-2.png'" alt="image" class="review-author">
-                                <p matLine fxLayoutAlign="start center">
-                                    <span class="fw-500">Jennifer Khoury</span>
-                                    <mat-icon class="text-muted px-1" matTooltip="Very Satisfied" matTooltipPosition="after">sentiment_very_satisfied</mat-icon>
-                                </p>
-                                <p matLine class="text-muted"><small>04 February, 2018 at 10:22</small></p>
-                                <p matLine class="text">fast shipping, amazing bag, love it. thank you!</p>
-                            </mat-list-item>
-                            <mat-list-item class="h-100 py-1">
-                                <img matListAvatar [src]="'assets/images/avatars/avatar-3.png'" alt="image" class="review-author">
-                                <p matLine fxLayoutAlign="start center">
-                                    <span class="fw-500">Alain Debs</span>
-                                    <mat-icon class="text-muted px-1" matTooltip="Neutral" matTooltipPosition="after">sentiment_neutral</mat-icon>
-                                </p>
-                                <p matLine class="text-muted"><small>14 February, 2018 at 11:10</small></p>
-                                <p matLine class="text">Extremely fast delivery and the backpack is amazing <3 Thank you very much!!! I recommend the seller!</p>
-                            </mat-list-item>
-                        </mat-list>
-                        
-                        <h3 class="mt-2">LEAVE YOUR REVIEW</h3>
-                        <div class="divider"></div>
-                        <p class="mt-2 text-muted">Your email address will not be published. Required fields are marked *</p>
-                        <h3 fxLayoutAlign="start center" class="mt-2">
-                            <span>Your Rating:</span>
-                            <button mat-icon-button matTooltip="Very Dissatisfied" matTooltipPosition="above"><mat-icon class="mat-icon-lg">sentiment_very_dissatisfied</mat-icon></button>
-                            <button mat-icon-button matTooltip="Dissatisfied" matTooltipPosition="above"><mat-icon class="mat-icon-lg">sentiment_dissatisfied</mat-icon></button>
-                            <button mat-icon-button matTooltip="Neutral" matTooltipPosition="above"><mat-icon class="mat-icon-lg">sentiment_neutral</mat-icon></button>
-                            <button mat-icon-button matTooltip="Satisfied" matTooltipPosition="above"><mat-icon class="mat-icon-lg">sentiment_satisfied</mat-icon></button>
-                            <button mat-icon-button matTooltip="Very Satisfied" matTooltipPosition="above"><mat-icon class="mat-icon-lg">sentiment_very_satisfied</mat-icon></button>
-                        </h3>
-
-                        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" fxLayout="row wrap">
-                            <div fxFlex="100" class="px-1 mt-1">
-                                <mat-form-field class="w-100">
-                                    <textarea matInput placeholder="Your review" formControlName="review" required></textarea>
-                                    <mat-error *ngIf="form.controls.review.errors?.required">Review is required</mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1 mt-2">
-                                <mat-form-field class="w-100">
-                                    <input matInput placeholder="Your name" formControlName="name" required>
-                                    <mat-error *ngIf="form.controls.name.errors?.required">Name is required</mat-error>
-                                    <mat-error *ngIf="form.controls.name.hasError('minlength')">Name isn't long enough, minimum of 4 characters</mat-error>
-                                </mat-form-field> 
-                            </div>
-                            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1 mt-2">
-                                <mat-form-field class="w-100">
-                                    <input matInput placeholder="Your email" formControlName="email" required>
-                                    <mat-error *ngIf="form.controls.email.errors?.required">Email is required</mat-error>
-                                    <mat-error *ngIf="form.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
-                                </mat-form-field> 
-                            </div>
-                            <div fxFlex="100" class="mt-2 text-center w-100">
-                                <button mat-raised-button color="primary" type="submit">SUBMIT REVIEW</button>
-                            </div>
-                        </form>
-
-                        
-                    </div>
-                </mat-tab>
-            </mat-tab-group>
-        </mat-card>
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="22" fxFlex.md="26" ngClass.gt-sm="pl-3" fxHide fxShow.gt-sm>
-        <img src="https://via.placeholder.com/400x320/EEEEEE/9E9E9E/?text=Banner%201" alt="" class="mw-100 d-block">
-        <img src="https://via.placeholder.com/400x320/EEEEEE/9E9E9E/?text=Banner%202" alt="" class="mw-100 d-block mt-3">
-        <img src="https://via.placeholder.com/400x320/EEEEEE/9E9E9E/?text=Banner%203" alt="" class="mw-100 d-block mt-3">
-    </div>
-</div>
-
 <div class="py-2 mt-2">
     <h2>Related Products</h2>
     <div class="divider"></div>
     <app-products-carousel [products]="relatedProducts"></app-products-carousel>
 </div>
-
-

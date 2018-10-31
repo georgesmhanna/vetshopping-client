@@ -7,6 +7,7 @@ import { Data, AppService } from '../../../app.service';
 import { Product } from "../../../app.models";
 import { emailValidator } from '../../../theme/utils/app-validators';
 import { ProductZoomComponent } from './product-zoom/product-zoom.component';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-product',
@@ -23,7 +24,8 @@ export class ProductComponent implements OnInit {
   private sub: any;
   public form: FormGroup;
   public relatedProducts: Array<Product>;
-
+    private selectedColor: any;
+ apiUrl = environment.apiUrl;
   constructor(public appService:AppService, private activatedRoute: ActivatedRoute, public dialog: MatDialog, public formBuilder: FormBuilder) {  }
 
   ngOnInit() {      
@@ -62,9 +64,14 @@ export class ProductComponent implements OnInit {
 
   public getProductById(id){
     this.appService.getProductById(id).subscribe(data=>{
+        data.categoryId = data.category ? data.category.id: undefined;
+        // data.sizes = data.prices.map(p=>p.size);
+        // data.listOfPrices = data.prices.map(p=>p.price);
+        // data.newPrice = data.listOfPrices.sort()[0];
+        console.log(data);
       this.product = data;
-      this.image = data.images[0].medium;
-      this.zoomImage = data.images[0].big;
+      this.image = this.apiUrl+data.images[0].url;
+      this.zoomImage = this.apiUrl+data.images[0].url;
       setTimeout(() => { 
         this.config.observer = true;
        // this.directiveRef.setIndex(0);
@@ -79,8 +86,8 @@ export class ProductComponent implements OnInit {
   }
 
   public selectImage(image){
-    this.image = image.medium;
-    this.zoomImage = image.big;
+    this.image = this.apiUrl+image.url;
+    this.zoomImage = this.apiUrl+image.url;
   }
 
   public onMouseMove(e){
@@ -122,4 +129,15 @@ export class ProductComponent implements OnInit {
     }
   }
 
+    setColor(name, e) {
+        console.log('selected color is ', name);
+        this.selectedColor = name;
+        var classList = e.target.classList;
+        var classes = e.target.className;
+        classes.includes('clicked') ? classList.remove('clicked') : classList.add('clicked');
+    }
+
+    updatePrice(size: any) {
+        // this.product.selectedPrice = this.product.prices.find(x=>x.size === size).price;
+    }
 }
