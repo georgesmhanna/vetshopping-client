@@ -1,4 +1,6 @@
 import { Component, OnInit} from '@angular/core';
+import {AppService} from '../../../app.service';
+import {Category} from '../../../app.models';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +9,15 @@ import { Component, OnInit} from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private appService: AppService) { }
 
-  ngOnInit() { }
+  categories: Array<Category>;
+  mainCategories : Array<Category>;
+  subCategories : Array<Category>;
+
+  ngOnInit() {
+      this.getCategories();
+  }
 
   openMegaMenu(){
     let pane = document.getElementsByClassName('cdk-overlay-pane');
@@ -21,5 +29,39 @@ export class MenuComponent implements OnInit {
         }        
     });
   }
+
+    public getCategories() {
+        // if (this.appService.Data.categories.length == 0) {
+            this.appService.getCategories().subscribe(async data => {
+                for (const c of data) {
+                    c.parentId = c.parent ? c.parent.id : 0;
+                    for (const sc of c.subCategories){
+                        // let a: any = await this.appService.strapi.getEntry('categories', sc.id);
+                        // console.log(`aa`, a);
+                        // console.log(`aaa`, a.subCategories);
+                        this.appService.getSubCategories(sc.id).subscribe(ssc=>{
+                            sc.subCategories = ssc;
+                        });
+                    }
+                    // if(c.hasSubCategory){
+                    //     this.appService.getSubCategories(c.id).subscribe(sc=>{
+                    //         c.subCategories = sc;
+                    //     })
+                    // }
+                }
+                this.categories = data;
+                this.appService.Data.categories = data;
+                this.mainCategories = this.categories.filter(c=>!c.parent);// && c.parent.name==='All Categories');
+                console.log(`categ menu `, this.categories);
+
+            });
+        // }
+        // else {
+        //     this.categories = this.appService.Data.categories;
+        //     this.mainCategories = this.categories.filter(c=>c.parent.name==='All Categories');
+        //     console.log(`categ menu `, this.categories);
+        //
+        // }
+    }
 
 }

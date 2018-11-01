@@ -61,7 +61,8 @@ export class BrandComponent implements OnInit {
   public getCategories(){  
     if(this.appService.Data.categories.length == 0) { 
       this.appService.getCategories().subscribe(data => {
-        this.categories = data;
+          data.forEach(c => c.parentId = c.parent ? c.parent.id : 0);
+          this.categories = data;
         this.appService.Data.categories = data;
       });
     }

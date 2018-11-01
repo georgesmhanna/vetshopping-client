@@ -138,7 +138,7 @@
                         <mat-chip color="warn" selected="true">{{product.discount}}% OFF</mat-chip>
                     </mat-chip-list>
                     <a [routerLink]="['/products', product.id, product.name]" class="image-link">
-                        <img [src]="product.images[0].medium" alt="">
+                        <img [src]="apiUrl+product.images[0]?.url" alt="">
                     </a>
                     <h4 class="category text-muted">{{ ( appService.Data.categories | filterById : product.categoryId )?.name }}</h4>                                                                     
                     <a [routerLink]="['/products', product.id, product.name]" class="title text-truncate">
@@ -149,7 +149,7 @@
                             <p class="old-price text-muted"><span *ngIf="product.oldPrice">${{product.oldPrice | number : '1.2-2'}}</span></p>
                             <p class="new-price">${{product.newPrice | number : '1.2-2'}}</p>
                         </div>
-                        <app-rating [ratingsCount]="product.ratingsCount" [ratingsValue]="product.ratingsValue" [direction]="'column'"></app-rating>
+                        <!--<app-rating [ratingsCount]="product.ratingsCount" [ratingsValue]="product.ratingsValue" [direction]="'column'"></app-rating>-->
                     </div>                            
                     <div class="divider mt-2"></div>
                     <div class="icons">
@@ -168,7 +168,7 @@
                                 <mat-chip color="warn" selected="true">{{product.discount}}% OFF</mat-chip>
                             </mat-chip-list>
                             <a [routerLink]="['/products', product.id, product.name]" class="image-link">
-                                <img [src]="product.images[0].medium" alt="">
+                                <img [src]="apiUrl+product.images[0]?.url" alt="">
                             </a>
                         </div>
                         <div fxFlex="100" fxFlex.gt-xs="60" class="p-2">
@@ -182,7 +182,7 @@
                                     <p class="old-price text-muted"><span *ngIf="product.oldPrice">${{product.oldPrice | number : '1.2-2'}}</span></p>
                                     <p class="new-price">${{product.newPrice | number : '1.2-2'}}</p>
                                 </div>
-                                <app-rating [ratingsCount]="product.ratingsCount" [ratingsValue]="product.ratingsValue" [direction]="'column'"></app-rating>
+                                <!--<app-rating [ratingsCount]="product.ratingsCount" [ratingsValue]="product.ratingsValue" [direction]="'column'"></app-rating>-->
                             </div>                            
                             <div class="divider"></div>
                             <div class="icons">
@@ -200,6 +200,10 @@
                     <pagination-controls class="product-pagination" autoHide="true" maxSize="5" (pageChange)="onPageChanged($event)"></pagination-controls>
                 </mat-card>
             </div>
+        </div>
+
+        <div *ngIf="!products || products.length==0" fxLayout="row wrap">
+            No products for this category. Please choose another one.
         </div>
         
     </mat-sidenav-content>

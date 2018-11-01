@@ -7,7 +7,7 @@
             <div class="swiper-container h-100" [swiper]="config">
                 <div class="swiper-wrapper">      
                     <div *ngFor="let image of product.images" class="swiper-slide">
-                        <img [attr.data-src]="image.medium" class="swiper-lazy"/>
+                        <img [attr.data-src]="apiUrl+image.url" class="swiper-lazy"/>
                         <div class="swiper-lazy-preloader"></div>
                     </div>
                 </div>
@@ -19,10 +19,10 @@
             <h2>{{product.name}}</h2>
             <div class="py-1 lh">
                 <p><span class="text-muted fw-500">Category: </span><span>{{ ( appService.Data.categories | filterById : product.categoryId )?.name }}</span></p>
-                <p><span class="text-muted fw-500">Availibility: </span><span>{{ (product.availibilityCount > 0) ? 'In stock':'Unavailable'}}</span></p>
+                <p><span class="text-muted fw-500">Availability: </span><span>{{ (product.availibilityCount > 0) ? 'In stock':'Unavailable'}}</span></p>
             </div>                 
             <div class="py-1">
-                <app-rating [ratingsCount]="product.ratingsCount" [ratingsValue]="product.ratingsValue" [direction]="'row'"></app-rating>
+                <!--<app-rating [ratingsCount]="product.ratingsCount" [ratingsValue]="product.ratingsValue" [direction]="'row'"></app-rating>-->
             </div>
             <p class="py-1 text-muted lh">{{product.description}}</p>
             <div fxLayoutAlign="end center" class="text-muted">                 

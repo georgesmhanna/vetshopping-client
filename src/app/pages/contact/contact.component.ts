@@ -37,7 +37,7 @@ export class ContactComponent implements OnInit {
     const email = {
       to: environment.contactSendToEmail,
       replyTo: values.email,
-        subject: `New Message on VetVillage.com from user ${values.name} (${values.email})`,
+        subject: `New Message on VetVillage.net from user ${values.name} (${values.email})`,
         html: `You have received a new message from user ${values.name} (${values.email}). <br>
         You can reply to this email to contact the user or call him on ${values.phone}. <br> 
         Here is the message of the user: <br>

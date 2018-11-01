@@ -32,20 +32,22 @@ export class PagesComponent implements OnInit {
     this.sidenavMenuItems = this.sidenavMenuService.getSidenavMenuItems();
   } 
 
-  public getCategories(){    
-    this.appService.getCategories().subscribe(data => {
-      this.categories = data;
-      this.category = data[0];
-      this.appService.Data.categories = data;
-    })
+  public getCategories() {
+      this.appService.getCategories().subscribe(data => {
+          data.forEach(c => c.parentId = c.parent ? c.parent.id : 0);
+          this.categories = data;
+          this.category = data[0];
+          this.appService.Data.categories = data;
+      })
   }
 
   public changeCategory(event){
-    if(event.target){
-      this.category = this.categories.filter(category => category.name == event.target.innerText)[0];
+    console.log('in pages event is', event);
+    if(event){
+      this.category = this.categories.filter(category => category.id == event.id)[0];
     }
     if(window.innerWidth < 960){
-      this.stopClickPropagate(event);
+      // this.stopClickPropagate(event);
     } 
   }
 
