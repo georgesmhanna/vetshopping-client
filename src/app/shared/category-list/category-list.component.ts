@@ -28,6 +28,12 @@ export class CategoryListComponent {
   }
 
   public changeCategory(event){
+    event.selected = true;
+    this.categories.forEach(c=>{
+      if(c.name!==event.name){
+        c.selected = false;
+      }
+    });
     this.change.emit(event);
   }
 
