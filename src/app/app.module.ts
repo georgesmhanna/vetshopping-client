@@ -32,6 +32,8 @@ import { FooterComponent } from './theme/components/footer/footer.component';
 import {ErrorInterceptor} from './helpers/error.interceptor';
 import {JwtInterceptor} from './helpers/jwt.interceptor';
 import {AuthenticationService} from './services/authentication.service';
+import {ReactiveFormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import {AuthenticationService} from './services/authentication.service';
     SharedModule,
     routing,
        SocialLoginModule,
-       FontAwesomeModule
+       FontAwesomeModule,
+       ReactiveFormsModule,
+       FormsModule
   ],
   declarations: [
     AppComponent,

@@ -30,6 +30,7 @@ export class ProductsComponent implements OnInit {
     public productFilter = {};
     private sub: any;
     private strapi = new Strapi(environment.apiUrl);
+
     constructor(private activatedRoute: ActivatedRoute, public appService: AppService, public dialog: MatDialog, private router: Router) {
     }
 
@@ -44,16 +45,20 @@ export class ProductsComponent implements OnInit {
         }
         this.getCategories();
         this.getBrands();
+
+
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.currentCategory = params;
             // to get products by category
             this.getProductsByCategory(params);
         });
+
+
         let colors: any = await this.strapi.getEntries('colors');
         let sizes: any = await this.strapi.getEntries('sizes');
 
-        let colorNames = colors.map(x=>x.name);
-        let sizeNames = sizes.map(x=>x.name);
+        let colorNames = colors.map(x => x.name);
+        let sizeNames = sizes.map(x => x.name);
 
 
         this.productFilter = {
@@ -67,11 +72,11 @@ export class ProductsComponent implements OnInit {
 
     }
 
-    public getAllProducts() {
-        if(this.categories) this.categories.forEach(c=>c.selected = false);
+    public getAllProducts(search: string = '') {
+        if (this.categories) this.categories.forEach(c => c.selected = false);
         this.appService.getAllProducts().subscribe(data => {
             data.forEach(product => this.finalize(product));
-            this.products = data;
+            this.products = !search ? data : data.filter(product => product.name.toLowerCase().includes(search.toLowerCase()));
             //for show more product
             // for (var index = 0; index < 3; index++) {
             //     this.products = this.products.concat(this.products);
@@ -84,7 +89,7 @@ export class ProductsComponent implements OnInit {
             this.appService.getCategories().subscribe(data => {
                 data.forEach(c => {
                     c.parentId = c.parent ? c.parent.id : 0;
-                    c.selected = this.currentCategory?  (c.id === this.currentCategory.id) : false;
+                    c.selected = this.currentCategory ? (c.id === this.currentCategory.id) : false;
                 });
                 this.categories = data;
                 console.log('this categories = ', this.categories);
@@ -94,8 +99,8 @@ export class ProductsComponent implements OnInit {
         }
         else {
             this.categories = this.appService.Data.categories;
-            this.categories.forEach(c=>{
-                c.selected = this.currentCategory?  (c.id === this.currentCategory.id) : false;
+            this.categories.forEach(c => {
+                c.selected = this.currentCategory ? (c.id === this.currentCategory.id) : false;
             });
         }
     }
@@ -154,13 +159,14 @@ export class ProductsComponent implements OnInit {
     }
 
     public getProductsByCategory(category: any) {
-        if (!category.name) {
-            this.getAllProducts();
+        if (!category.id || category.name === 'All Products') {
+            this.getAllProducts(category.search);
             return;
         }
+
         return this.appService.getProductsByCategory(category.id).subscribe(data => {
             data.forEach(product => this.finalize(product));
-            this.products = data;
+            this.products = !category.search ? data : data.filter(product => product.name.toLowerCase().includes(category.search.toLowerCase()));
             console.log('products by category: ', this.products);
             //for show more product
             // for (var index = 0; index < 3; index++) {
