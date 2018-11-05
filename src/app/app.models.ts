@@ -1,5 +1,6 @@
 export class Category {
     parent: any;
+    selected: boolean;
   constructor(public id: number, 
               public name:string, 
               public hasSubCategory: boolean,

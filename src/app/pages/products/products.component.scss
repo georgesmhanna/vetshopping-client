@@ -32,11 +32,16 @@
 }
 
 .filter-buttons{
-    button{
+    button, mat-button-toggle{
         min-width: 36px;
         margin: 0 6px 10px 0;
         padding: 0;
     }
+    button.clicked{
+        border: 2.2px solid green;
+        background-color: darkgray;
+    }
+
 }
 
 .filter-price{
@@ -59,3 +64,5 @@
         }
     }
 }
+
+

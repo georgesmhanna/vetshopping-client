@@ -9,7 +9,8 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="categories-wrapper categories-dropdown" perfectScrollbar>
-                    <app-category-list [categories]="categories" [categoryParentId]="0" (change)="onChangeCategory($event)"></app-category-list>
+                    <a mat-menu-item routerLink="/products">All Products</a>
+                    <app-category-list  [categories]="categories" [categoryParentId]="0" (change)="onChangeCategory($event)"></app-category-list>
                 </div>
             </mat-expansion-panel>
 
@@ -20,12 +21,12 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div fxLayout="row" fxLayoutAlign="space-between center" class="text-muted">
-                    <span>From: <b>${{priceFrom}}</b></span>
-                    <span>To: <b>${{priceTo}}</b></span>
+                    <span>From: <b>${{productFilter.minPrice}}</b></span>
+                    <span>To: <b>${{productFilter.maxPrice}}</b></span>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="space-between center" class="filter-price">
-                    <mat-slider color="primary" max="2000" min="1" thumb-label="true" [(ngModel)]="priceFrom"></mat-slider>
-                    <mat-slider color="warn" max="2000" min="1" thumb-label="true" [(ngModel)]="priceTo"></mat-slider>
+                    <mat-slider color="primary" max="100" min="0" thumb-label="true" [(ngModel)]="productFilter.minPrice"></mat-slider>
+                    <mat-slider color="warn" max="100" min="0" thumb-label="true" [(ngModel)]="productFilter.maxPrice"></mat-slider>
                 </div>
             </mat-expansion-panel>
 
@@ -36,7 +37,8 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="filter-buttons">
-                    <button mat-raised-button *ngFor="let color of colors" [style.background]="color">&nbsp;</button>
+                    <button mat-raised-button [ngClass]="{'clicked': productFilter.color===color}" (click)="productFilter.color='any'">ALL</button>
+                    <button mat-raised-button [ngClass]="{'clicked': productFilter.color===color}" *ngFor="let color of productFilter.colors" [style.background]="color" (click)="productFilter.color=color;">&nbsp;</button>
                 </div>
             </mat-expansion-panel>
 
@@ -47,7 +49,8 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="filter-buttons">
-                    <button mat-raised-button *ngFor="let size of sizes">{{size}}</button>
+                    <button mat-raised-button [ngClass]="{'clicked': productFilter.size===size}" (click)="productFilter.size='any'">ALL</button>
+                    <button mat-raised-button [ngClass]="{'clicked': productFilter.size===size}" *ngFor="let size of productFilter.sizes" (click)="productFilter.size=size;">{{size}}</button>
                 </div>
             </mat-expansion-panel>
 
@@ -76,18 +79,6 @@
                     </button>
                 </div>
             </mat-expansion-panel>
-
-            <mat-expansion-panel expanded>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h4>Now starting at $1379</h4>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div fxLayout="row wrap" fxLayoutAlign="center center">
-                   <a [routerLink]="['/products/electronics']"><img src="assets/images/products/probook/2-medium.png" alt="" class="mw-100"></a>
-                </div>
-            </mat-expansion-panel>
-
         </mat-accordion>
 
     </mat-sidenav>
@@ -132,7 +123,7 @@
         </div>
 
         <div *ngIf="viewType == 'grid'" fxLayout="row wrap" class="products-wrapper">
-            <div *ngFor="let product of products | paginate: { itemsPerPage: count, currentPage: page }" fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
+            <div *ngFor="let product of products | paginate: { itemsPerPage: count, currentPage: page } | filterProducts: productFilter | sortProducts: sort " fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
                 <mat-card class="product-item text-center">
                     <mat-chip-list *ngIf="product.discount">
                         <mat-chip color="warn" selected="true">{{product.discount}}% OFF</mat-chip>

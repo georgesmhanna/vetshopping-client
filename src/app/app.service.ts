@@ -164,5 +164,9 @@ export class AppService {
             html: email.html
         });
     }
+
+    public filterByPrice(price, type = "lte"){
+        return this.http.get<any>(`${environment.apiUrl}/products?newPrice._${type}=${price}`);
+    }
 }
 
