@@ -32,6 +32,7 @@
                   <!--</mat-form-field>-->
                 <!--</div>-->
                 <!--<div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">-->
+                <!--<div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">-->
                   <!--<mat-form-field class="w-100">-->
                       <!--<input matInput placeholder="Phone" formControlName="phone" required>-->
                       <!--<mat-error *ngIf="billingForm.controls.phone.errors?.required">Phone is required</mat-error>-->
@@ -103,12 +104,12 @@
                       <input matInput placeholder="Company" formControlName="company">
                   </mat-form-field>
                 </div>
-                <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
-                  <mat-form-field class="w-100">
-                      <input matInput placeholder="Email" formControlName="email" required>
-                      <mat-error *ngIf="shippingForm.controls.email.errors?.required">Email is required</mat-error>
-                  </mat-form-field>
-                </div>
+                <!--<div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">-->
+                  <!--<mat-form-field class="w-100">-->
+                      <!--<input matInput placeholder="Email" formControlName="email" required>-->
+                      <!--<mat-error *ngIf="shippingForm.controls.email.errors?.required">Email is required</mat-error>-->
+                  <!--</mat-form-field>-->
+                <!--</div>-->
                 <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
                   <mat-form-field class="w-100">
                       <input matInput placeholder="Phone" formControlName="phone" required>
@@ -149,7 +150,7 @@
                   </mat-form-field>
                 </div>
                 <div fxFlex="100" class="text-center mt-2">
-                    <button mat-raised-button color="primary" (click)="onShippingFormSubmit(shippingForm.value)">Save</button>
+                    <button type="button" mat-raised-button color="primary" (click)="onShippingFormSubmit(shippingForm.value)">Save</button>
                 </div>
               </div>
             </form>

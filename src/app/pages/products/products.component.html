@@ -37,7 +37,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="filter-buttons">
-                    <button mat-raised-button [ngClass]="{'clicked': productFilter.color===color}" (click)="productFilter.color='any'">ALL</button>
+                    <button mat-raised-button  (click)="productFilter.color='any'">ALL</button>
                     <button mat-raised-button [ngClass]="{'clicked': productFilter.color===color}" *ngFor="let color of productFilter.colors" [style.background]="color" (click)="productFilter.color=color;">&nbsp;</button>
                 </div>
             </mat-expansion-panel>
@@ -49,7 +49,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="filter-buttons">
-                    <button mat-raised-button [ngClass]="{'clicked': productFilter.size===size}" (click)="productFilter.size='any'">ALL</button>
+                    <button mat-raised-button  (click)="productFilter.size='any'">ALL</button>
                     <button mat-raised-button [ngClass]="{'clicked': productFilter.size===size}" *ngFor="let size of productFilter.sizes" (click)="productFilter.size=size;">{{size}}</button>
                 </div>
             </mat-expansion-panel>

@@ -12,8 +12,8 @@ export class AccountComponent implements OnInit {
   public sidenavOpen:boolean = true;
   public links = [
     { name: 'Account Dashboard', href: 'dashboard', icon: 'dashboard' },
-    { name: 'Account Information', href: 'information', icon: 'info' },
-    { name: 'Addresses', href: 'addresses', icon: 'location_on' },
+    // { name: 'Account Information', href: 'information', icon: 'info' },
+    { name: 'Address', href: 'addresses', icon: 'location_on' },
     { name: 'Order History', href: 'orders', icon: 'add_shopping_cart' },  
     { name: 'Logout', href: '/sign-in', icon: 'power_settings_new' },    
   ];

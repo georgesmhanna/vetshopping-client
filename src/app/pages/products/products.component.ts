@@ -27,7 +27,7 @@ export class ProductsComponent implements OnInit {
     public page: any;
     public apiUrl = environment.apiUrl;
     public currentCategory: any = {};
-    public productFilter = {};
+    public productFilter : any= {};
     private sub: any;
     private strapi = new Strapi(environment.apiUrl);
 
