@@ -32,7 +32,6 @@ export class AuthenticationService {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.strapi.setToken(user.token);
-                    this.getUserData(user);
                     this.isLoginSubject.next(true);
                     this.userSubject.next(user);
                 }
@@ -64,7 +63,6 @@ export class AuthenticationService {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.strapi.setToken(user.token);
-                    this.getUserData(user);
                     this.isLoginSubject.next(true);
                     this.userSubject.next(user);
                 }
@@ -79,11 +77,5 @@ export class AuthenticationService {
 
     private getUserFromStorage() {
         return this.hasToken()? JSON.parse(localStorage.getItem('currentUser')) : null;
-    }
-
-    private async getUserData(user) {
-        console.log('inside get user data');
-        const wishlist = await this.strapi.getEntries('wishlists', {user: user._id});
-        console.log(wishlist);
     }
 }

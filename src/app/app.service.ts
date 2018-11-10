@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { MatSnackBar } from '@angular/material';
-import { Category, Product } from './app.models';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {MatSnackBar} from '@angular/material';
+import {Category, Product} from './app.models';
 import {environment} from '../environments/environment';
 import Strapi from 'strapi-sdk-javascript/build/module/lib/sdk';
 
@@ -11,7 +11,8 @@ export class Data {
                 public compareList: Product[],
                 public wishList: Product[],
                 public cartList: Product[],
-                public totalPrice: number) { }
+                public totalPrice: number) {
+    }
 }
 
 @Injectable()
@@ -22,8 +23,8 @@ export class AppService {
         [],  // wishList
         [],  // cartList
         null // totalPrice
-    )
-    public url = "assets/data/";
+    );
+    public url = 'assets/data/';
     public strapi = new Strapi(environment.apiUrl + '/');
 
     constructor(public http: HttpClient, public snackBar: MatSnackBar) { }
@@ -32,7 +33,7 @@ export class AppService {
         return this.http.get(environment.apiUrl + '/categories');
     }
 
-    public getSubCategories(id){
+    public getSubCategories(id) {
         return this.http.get(`${environment.apiUrl}/categories/${id}/subcategories`);
 
     }
@@ -66,20 +67,6 @@ export class AppService {
         else {
             this.Data.compareList.push(product);
             message = 'The product ' + product.name + ' has been added to comparison list.';
-            status = 'success';
-        }
-        this.snackBar.open(message, '×', {panelClass: [status], verticalPosition: 'top', duration: 3000});
-    }
-
-    public addToWishList(product: Product) {
-        let message, status;
-        if (this.Data.wishList.filter(item => item.id == product.id)[0]) {
-            message = 'The product ' + product.name + ' already added to wish list.';
-            status = 'error';
-        }
-        else {
-            this.Data.wishList.push(product);
-            message = 'The product ' + product.name + ' has been added to wish list.';
             status = 'success';
         }
         this.snackBar.open(message, '×', {panelClass: [status], verticalPosition: 'top', duration: 3000});
@@ -165,7 +152,7 @@ export class AppService {
         });
     }
 
-    public filterByPrice(price, type = "lte"){
+    public filterByPrice(price, type = 'lte') {
         return this.http.get<any>(`${environment.apiUrl}/products?newPrice._${type}=${price}`);
     }
 }

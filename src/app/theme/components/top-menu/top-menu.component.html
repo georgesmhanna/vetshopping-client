@@ -26,7 +26,7 @@
 
     <span fxShow="false" fxShow.gt-sm>
         <a mat-button routerLink="/contact">Contact us or Request a veterinary service</a>
-        <a mat-button routerLink="/wishlist">Wishlist ({{appService.Data.wishList.length}})</a>
+        <a mat-button routerLink="/wishlist">Wishlist ({{(wishlist$ | async)?.products?.length || 0}})</a>
 
     </span>
 

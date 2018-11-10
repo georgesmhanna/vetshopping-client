@@ -34,6 +34,7 @@ import {JwtInterceptor} from './helpers/jwt.interceptor';
 import {AuthenticationService} from './services/authentication.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import {WishlistService} from './services/wishlist.service';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { FormsModule } from '@angular/forms';
     AppSettings,
     AppService,
     AuthenticationService,
+      WishlistService,
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
     { provide: MAT_MENU_SCROLL_STRATEGY, useFactory: menuScrollStrategy, deps: [Overlay] },
       { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
