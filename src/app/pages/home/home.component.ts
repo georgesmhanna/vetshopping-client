@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../app.service';
 import { Product } from "../../app.models";
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -68,7 +69,12 @@ export class HomeComponent implements OnInit {
   }
 
   public getBrands(){
-    this.brands = this.appService.getBrands();
+    this.appService.getBrands().then((brands: any)=>{
+      console.log(`brandsssss`, brands);
+      brands.forEach(brand=>brand.image = environment.apiUrl+brand.image.url);
+      this.brands = brands;
+      console.log(`brands: `,this.brands);
+    });
   }
 
 }

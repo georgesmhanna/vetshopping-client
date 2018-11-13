@@ -54,18 +54,18 @@
                 </div>
             </mat-expansion-panel>
 
-            <mat-expansion-panel expanded>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h4>Condition</h4>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div fxLayout="column">
-                    <mat-checkbox color="primary">New</mat-checkbox>
-                    <mat-checkbox color="primary">Used</mat-checkbox>
-                    <mat-checkbox color="primary">Not Specified</mat-checkbox>
-                </div>
-            </mat-expansion-panel>
+            <!--<mat-expansion-panel expanded>-->
+                <!--<mat-expansion-panel-header>-->
+                    <!--<mat-panel-title>-->
+                        <!--<h4>Condition</h4>-->
+                    <!--</mat-panel-title>-->
+                <!--</mat-expansion-panel-header>-->
+                <!--<div fxLayout="column">-->
+                    <!--<mat-checkbox color="primary">New</mat-checkbox>-->
+                    <!--<mat-checkbox color="primary">Used</mat-checkbox>-->
+                    <!--<mat-checkbox color="primary">Not Specified</mat-checkbox>-->
+                <!--</div>-->
+            <!--</mat-expansion-panel>-->
 
             <mat-expansion-panel expanded>
                 <mat-expansion-panel-header>
@@ -74,7 +74,8 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="filter-brands">                  
-                    <button mat-raised-button *ngFor="let brand of brands">
+                    <button mat-raised-button (click)="productFilter.brand='any'">ALL</button>
+                    <button mat-raised-button matTooltip="{{brand.name}}" *ngFor="let brand of brands" (click)="productFilter.brand=brand">
                         <img [src]="brand.image"/>
                     </button>
                 </div>
@@ -123,13 +124,13 @@
         </div>
 
         <div *ngIf="viewType == 'grid'" fxLayout="row wrap" class="products-wrapper">
-            <div *ngFor="let product of products | paginate: { itemsPerPage: count, currentPage: page } | filterProducts: productFilter | sortProducts: sort " fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
+            <div *ngFor="let product of products  | filterProducts: productFilter | sortProducts: sort | paginate: { itemsPerPage: count, currentPage: page } " fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
                 <mat-card class="product-item text-center">
                     <mat-chip-list *ngIf="product.discount">
                         <mat-chip color="warn" selected="true">{{product.discount}}% OFF</mat-chip>
                     </mat-chip-list>
                     <a [routerLink]="['/products', product.id, product.name]" class="image-link">
-                        <img [src]="apiUrl+product.images[0]?.url" alt="">
+                        <img [src]="apiUrl+product.images[0]?.url" alt="" style="max-height: 185px;">
                     </a>
                     <h4 class="category text-muted">{{ ( appService.Data.categories | filterById : product.categoryId )?.name }}</h4>                                                                     
                     <a [routerLink]="['/products', product.id, product.name]" class="title text-truncate">

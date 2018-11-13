@@ -1,3 +1,18 @@
+<div *ngIf="type=='all'" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" class="details text-muted py-1">
+    <div *ngIf="product?.colors && product?.colors?.length > 0" class="color">
+        <span class="fw-500">Select Color:</span>
+        <!--<button mat-raised-button *ngFor="let color of product?.colors" [style.background]="color.name" (click)="setColor(color.name, $event)">&nbsp;</button>-->
+        <mat-button-toggle-group #colorGroup="matButtonToggleGroup">
+            <mat-button-toggle *ngFor="let color of product?.colors" [style.background]="color.name">&nbsp;</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <div *ngIf="product?.sizes && product?.sizes?.length > 0" class="size" ngClass.xs="mt-1">
+        <span class="fw-500">Select Size:</span>
+        <mat-button-toggle-group  #sizeGroup="matButtonToggleGroup">
+            <mat-button-toggle *ngFor="let size of product?.sizes" [value]="size">{{size.name}}</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+</div>
 <div fxLayout="row" fxLayout.xs="column" [fxLayoutAlign]="align" class="text-muted">
     <div *ngIf="product?.availibilityCount > 0 && (type=='all' || type=='wish')">
         <span *ngIf="type!='wish'" class="fw-500">Quantity:</span> 
@@ -7,7 +22,7 @@
     </div>
     <div *ngIf="type!='wish'">
         <button mat-icon-button matTooltip="Add to wishlist" (click)="addToWishList(product)"><mat-icon>favorite</mat-icon></button>
-        <button mat-icon-button matTooltip="Add to cart" *ngIf="product?.availibilityCount > 0" (click)="addToCart(product)"><mat-icon>shopping_cart</mat-icon></button>
+        <button mat-icon-button matTooltip="Add to cart" *ngIf="product?.availibilityCount > 0 && type==='all'" (click)="addToCart(product)"><mat-icon>shopping_cart</mat-icon></button>
         <!--<button mat-icon-button matTooltip="Add to compare" (click)="addToCompare(product)"><mat-icon>compare</mat-icon></button>-->
         <button *ngIf="type!='all'" mat-icon-button matTooltip="Quick view" (click)="openProductDialog(product)"><mat-icon>remove_red_eye</mat-icon></button>
     </div>

@@ -90,22 +90,8 @@ export class AppService {
         this.snackBar.open(message, '×', {panelClass: [status], verticalPosition: 'top', duration: 3000});
     }
 
-    public getBrands() {
-        return [
-            {name: 'aloha', image: 'assets/images/brands/aloha.png'},
-            {name: 'dream', image: 'assets/images/brands/dream.png'},
-            {name: 'congrats', image: 'assets/images/brands/congrats.png'},
-            {name: 'best', image: 'assets/images/brands/best.png'},
-            {name: 'original', image: 'assets/images/brands/original.png'},
-            {name: 'retro', image: 'assets/images/brands/retro.png'},
-            {name: 'king', image: 'assets/images/brands/king.png'},
-            {name: 'love', image: 'assets/images/brands/love.png'},
-            {name: 'the', image: 'assets/images/brands/the.png'},
-            {name: 'easter', image: 'assets/images/brands/easter.png'},
-            {name: 'with', image: 'assets/images/brands/with.png'},
-            {name: 'special', image: 'assets/images/brands/special.png'},
-            {name: 'bravo', image: 'assets/images/brands/bravo.png'}
-        ];
+    public async getBrands() {
+        return  await this.strapi.getEntries('brands');
     }
 
     public async getCountries() {

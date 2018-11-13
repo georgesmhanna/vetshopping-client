@@ -102,7 +102,7 @@
                                     <p matLine class="text-muted">
                                         <span> 1 x ${{product.newPrice | number : '1.2-2'}} </span>
                                     </p>
-                                    <img [src]="product.images[0].small" alt="image">
+                                    <img [src]="apiUrl+product.images[0].url" alt="image">
                                     <button mat-icon-button color="warn" class="remove"
                                             (click)="remove(product);stopClickPropagate($event)" matTooltip="Remove"
                                             matTooltipPosition="before">

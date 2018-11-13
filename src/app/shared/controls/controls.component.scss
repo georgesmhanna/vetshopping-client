@@ -1,0 +1,25 @@
+.clicked {
+  border: 2px solid black;
+  outline: black solid;
+}
+
+mat-button-toggle {
+  border: 1px solid #f28628;
+  border-radius: 4px;
+  margin-left: 3px;
+  margin-right:3px;
+  //width: 30px;
+  //height: 30px;
+  font-family: 'Nunito Semibold', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.mat-button-toggle-checked{
+  border: 2.5px solid green;
+  background-color: darkgray;
+}
+
+.mat-button-toggle-group{
+  box-shadow: inherit;
+}

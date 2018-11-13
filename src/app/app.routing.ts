@@ -18,7 +18,7 @@ export const routes: Routes = [
             { path: 'sign-in', loadChildren: 'app/pages/sign-in/sign-in.module#SignInModule', data: { breadcrumb: 'Sign In ' } },
             { path: 'forgot-password', loadChildren: 'app/pages/forgot-password/forgot-password.module#ForgotPasswordModule', data: { breadcrumb: 'Forgot Password ' } },
             { path: 'reset-password', loadChildren: 'app/pages/reset-password/reset-password.module#ResetPasswordModule', data: { breadcrumb: 'Reset Password ' } },
-            { path: 'brands', loadChildren: 'app/pages/brands/brands.module#BrandsModule', data: { breadcrumb: 'Brands' } },
+            // { path: 'brands', loadChildren: 'app/pages/brands/brands.module#BrandsModule', data: { breadcrumb: 'Brands' } },
             { path: 'products', loadChildren: 'app/pages/products/products.module#ProductsModule', data: { breadcrumb: 'All Products' } }
         ]
     },

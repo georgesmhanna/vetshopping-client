@@ -13,7 +13,8 @@ export class FilterProductsPipe implements PipeTransform {
             return _product.newPrice >= args.minPrice &&
                 _product.newPrice <= args.maxPrice
                 && ((args.color !== 'any' && _product.colors.map(color => color.name).includes(args.color)) || (args.color === 'any'))
-                && ((args.size !== 'any' && _product.sizes.map(size => size.name).includes(args.size)) || (args.size === 'any'));
+                && ((args.size !== 'any' && _product.sizes.map(size => size.name).includes(args.size)) || (args.size === 'any'))
+                && ((args.brand !== 'any' && _product.brand && _product.brand.name && _product.brand.name.toLowerCase() === args.brand.name.toLowerCase() ) || (args.brand === 'any'));
         });
     }
 

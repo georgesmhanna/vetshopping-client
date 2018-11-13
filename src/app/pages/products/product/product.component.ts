@@ -129,13 +129,6 @@ export class ProductComponent implements OnInit {
     }
   }
 
-    setColor(name, e) {
-        console.log('selected color is ', name);
-        this.selectedColor = name;
-        var classList = e.target.classList;
-        var classes = e.target.className;
-        classes.includes('clicked') ? classList.remove('clicked') : classList.add('clicked');
-    }
 
     updatePrice(size: any) {
         // this.product.selectedPrice = this.product.prices.find(x=>x.size === size).price;

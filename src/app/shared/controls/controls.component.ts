@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {Data, AppService} from '../../app.service';
 import {Product} from '../../app.models';
@@ -21,8 +21,10 @@ export class ControlsComponent implements OnInit {
     public align = 'center center';
     private loggedIn: boolean;
 
+
     constructor(public appService: AppService, public snackBar: MatSnackBar, private authService: AuthenticationService, private router: Router, private wishlistService: WishlistService) {
     }
+
 
     ngOnInit() {
         if (this.product) {
@@ -109,6 +111,7 @@ export class ControlsComponent implements OnInit {
     }
 
     public addToCart(product: Product) {
+        // console.log(`selected color is `, colorGroup.value);
         this.appService.addToCart(product);
     }
 

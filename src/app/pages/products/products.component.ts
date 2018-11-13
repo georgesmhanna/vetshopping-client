@@ -67,7 +67,8 @@ export class ProductsComponent implements OnInit {
             colors: colorNames,
             color: 'any',
             sizes: sizeNames,
-            size: 'any'
+            size: 'any',
+            brand: 'any'
         };
 
     }
@@ -106,7 +107,12 @@ export class ProductsComponent implements OnInit {
     }
 
     public getBrands() {
-        this.brands = this.appService.getBrands();
+        this.appService.getBrands().then((brands: any)=>{
+            console.log(`brandsssss`, brands);
+            brands.forEach(brand=>brand.image = environment.apiUrl+brand.image.url);
+            this.brands = brands;
+            console.log(`brands: `,this.brands);
+        });
     }
 
     ngOnDestroy() {

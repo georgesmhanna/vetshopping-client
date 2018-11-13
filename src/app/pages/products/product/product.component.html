@@ -33,7 +33,8 @@
         <div class="py-1 lh">
             <p><span class="text-muted fw-500">Category: </span><span>{{ ( appService.Data.categories | filterById : product?.categoryId )?.name }}</span></p>
             <p><span class="text-muted fw-500">Availability: </span><span>{{ (product?.availibilityCount > 0) ? 'In stock':'Unavailable'}}</span></p>
-        </div>                 
+            <p *ngIf="product?.weight"><span class="text-muted fw-500" >Weight: </span><span>{{ product?.weight}} Kg</span></p>
+        </div>
         <!--<div class="py-1">-->
             <!--<app-rating [ratingsCount]="product?.ratingsCount" [ratingsValue]="product?.ratingsValue" [direction]="'row'"></app-rating>-->
         <!--</div>-->
@@ -42,21 +43,20 @@
         <div class="divider mt-1"></div>
         <h2 class="py-2 new-price">${{product?.newPrice}}</h2>
 
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" class="details text-muted py-1">
-            <div *ngIf="product?.colors" class="color">
-                <span class="fw-500">Select Color:</span>
-                <!--<button mat-raised-button *ngFor="let color of product?.colors" [style.background]="color.name" (click)="setColor(color.name, $event)">&nbsp;</button>-->
-                <mat-button-toggle-group #group="matButtonToggleGroup">
-                <mat-button-toggle *ngFor="let color of product?.colors" [style.background]="color.name">&nbsp;</mat-button-toggle>
-                </mat-button-toggle-group>
-            </div>
-            <div *ngIf="product?.sizes" class="size" ngClass.xs="mt-1">
-                <span class="fw-500">Select Size:</span>
-                <mat-button-toggle-group #group="matButtonToggleGroup">
-                <mat-button-toggle *ngFor="let size of product?.sizes" [value]="size" (click)="updatePrice(size)">{{size.name}}</mat-button-toggle>
-                </mat-button-toggle-group>
-            </div>
-        </div>
+        <!--<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" class="details text-muted py-1">-->
+            <!--<div *ngIf="product?.colors && product?.colors?.length > 0" class="color">-->
+                <!--<span class="fw-500">Select Color:</span>-->
+                <!--<mat-button-toggle-group #group="matButtonToggleGroup">-->
+                <!--<mat-button-toggle *ngFor="let color of product?.colors" [style.background]="color.name">&nbsp;</mat-button-toggle>-->
+                <!--</mat-button-toggle-group>-->
+            <!--</div>-->
+            <!--<div *ngIf="product?.sizes && product?.sizes?.length > 0" class="size" ngClass.xs="mt-1">-->
+                <!--<span class="fw-500">Select Size:</span>-->
+                <!--<mat-button-toggle-group #group="matButtonToggleGroup">-->
+                <!--<mat-button-toggle *ngFor="let size of product?.sizes" [value]="size">{{size.name}}</mat-button-toggle>-->
+                <!--</mat-button-toggle-group>-->
+            <!--</div>-->
+        <!--</div>-->
 
         <div class="py-1">
             <app-controls [product]="product" [type]="'all'"></app-controls> 
