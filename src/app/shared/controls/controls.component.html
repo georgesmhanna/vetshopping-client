@@ -2,13 +2,13 @@
     <div *ngIf="product?.colors && product?.colors?.length > 0" class="color">
         <span class="fw-500">Select Color:</span>
         <!--<button mat-raised-button *ngFor="let color of product?.colors" [style.background]="color.name" (click)="setColor(color.name, $event)">&nbsp;</button>-->
-        <mat-button-toggle-group #colorGroup="matButtonToggleGroup">
-            <mat-button-toggle *ngFor="let color of product?.colors" [style.background]="color.name">&nbsp;</mat-button-toggle>
+        <mat-button-toggle-group #colorGroup="matButtonToggleGroup" (change)="onColorSelected($event)">
+            <mat-button-toggle *ngFor="let color of product?.colors" [value]="color" [style.background]="color.name">&nbsp;</mat-button-toggle>
         </mat-button-toggle-group>
     </div>
     <div *ngIf="product?.sizes && product?.sizes?.length > 0" class="size" ngClass.xs="mt-1">
         <span class="fw-500">Select Size:</span>
-        <mat-button-toggle-group  #sizeGroup="matButtonToggleGroup">
+        <mat-button-toggle-group  #sizeGroup="matButtonToggleGroup" (change)="onSizeSelected($event)">
             <mat-button-toggle *ngFor="let size of product?.sizes" [value]="size">{{size.name}}</mat-button-toggle>
         </mat-button-toggle-group>
     </div>

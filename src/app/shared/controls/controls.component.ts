@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
+import {MatButtonToggleChange, MatSnackBar} from '@angular/material';
 import {Data, AppService} from '../../app.service';
-import {Product} from '../../app.models';
+import {OrderItem, Product} from '../../app.models';
 import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 import {WishlistService} from '../../services/wishlist.service';
@@ -15,12 +15,13 @@ import {BehaviorSubject, Observable} from 'rxjs';
 export class ControlsComponent implements OnInit {
     @Input() product: Product;
     @Input() type: string;
+    @Input() count: number;
     @Output() onOpenProductDialog: EventEmitter<any> = new EventEmitter();
     @Output() onQuantityChange: EventEmitter<any> = new EventEmitter<any>();
-    public count: number = 1;
+    // public count: number = 1;
     public align = 'center center';
     private loggedIn: boolean;
-
+    private orderItem: OrderItem
 
     constructor(public appService: AppService, public snackBar: MatSnackBar, private authService: AuthenticationService, private router: Router, private wishlistService: WishlistService) {
     }
@@ -110,9 +111,11 @@ export class ControlsComponent implements OnInit {
         }
     }
 
-    public addToCart(product: Product) {
-        // console.log(`selected color is `, colorGroup.value);
-        this.appService.addToCart(product);
+    public addToCart(orderItem: OrderItem) {
+        console.log(`adding to cart product`, orderItem.product);
+        console.log(`adding to cart product with color`, orderItem.color);
+        console.log(`adding to cart product with size`, orderItem.size);
+        this.appService.addToCart(orderItem);
     }
 
     public openProductDialog(event) {
@@ -123,4 +126,12 @@ export class ControlsComponent implements OnInit {
         this.onQuantityChange.emit(value);
     }
 
+    onColorSelected($event: MatButtonToggleChange) {
+            this.orderItem.color = $event.value;
+    }
+
+    onSizeSelected($event: MatButtonToggleChange) {
+
+        this.orderItem.size = $event.value;
+    }
 }

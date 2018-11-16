@@ -12,7 +12,6 @@ export class WishlistService {
     user: any;
     strapi = new Strapi(environment.apiUrl);
     wishlistSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-    new;
 
     constructor(private http: HttpClient, private auth: AuthenticationService) {
         this.getWishlistByUserFromDb();
@@ -26,7 +25,7 @@ export class WishlistService {
     public addToWishList(product: Product) {
         return this.http.post<any>(`${environment.apiUrl}/wishlists/addToWishlist`, {productid: product.id})
             .pipe(map(response => {
-                console.log(`resonse add to wishlist`, response);
+                console.log(`response add to wishlist`, response);
                 this.wishlistSubject.next(response);
                 return response;
             }));

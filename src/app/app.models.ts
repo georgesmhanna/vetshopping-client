@@ -37,3 +37,31 @@ export class User {
                 public password: string) {
     }
 }
+
+export class OrderItem {
+    constructor(
+        public quantity: number,
+        public product: Product,
+        public color: any,
+        public size: any,
+        public cart: Cart,
+        public order: Order,
+        public image: string
+    ){}
+}
+
+export class Cart {
+    constructor(
+        public orderItems: OrderItem[],
+        public user: any
+    ){}
+}
+
+
+export class Order {
+    constructor(
+        public orderItems: OrderItem[],
+        public user: any,
+        public orderNo: number
+    ){}
+}

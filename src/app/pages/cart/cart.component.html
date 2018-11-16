@@ -5,7 +5,7 @@
   <a [routerLink]="['/']" mat-raised-button color="primary" class="mt-2">Continue shopping</a>
 </div>
 
-<mat-card *ngIf="appService.Data.cartList?.length > 0" class="p-0">
+<mat-card *ngIf="cart?.orderItems?.length > 0" class="p-0">
 
   <div class="mat-table cart-table">
     <div class="mat-header-row">
@@ -16,21 +16,21 @@
       <div class="mat-header-cell">Total</div>
       <div class="mat-header-cell text-center">
         <div class="px-1">
-          <button mat-raised-button color="warn" (click)="clear()">Clear All</button>
+          <!--<button mat-raised-button color="warn" (click)="clear()">Clear All</button>-->
         </div>
       </div>
     </div>
-    <div *ngFor="let product of appService.Data.cartList" class="mat-row">
-      <div class="mat-cell"><img [src]="product.images[0].small"></div>
-      <div class="mat-cell"><a [routerLink]="['/products', product.id, product.name]" class="product-name">{{product.name}}</a></div>
-      <div class="mat-cell">${{product.newPrice | number : '1.2-2'}}</div>      
+    <div *ngFor="let orderItem of cart.orderItems" class="mat-row">
+      <div class="mat-cell"><img [src]="apiUrl+orderItem.image"></div>
+      <div class="mat-cell"><a [routerLink]="['/products', orderItem.product.id, orderItem.product.name]" class="product-name">{{orderItem.product.name}}</a></div>
+      <div class="mat-cell">${{orderItem.product.newPrice | number : '1.2-2'}}</div>
       <div class="mat-cell text-muted">
-        <app-controls [product]="product" [type]="'wish'" (onQuantityChange)="getTotalPrice($event)"></app-controls>
+        <app-controls [product]="orderItem.product" [type]="'wish'" (onQuantityChange)="getTotalPrice($event)"></app-controls>
       </div>
-      <div class="mat-cell">${{total[product.id] | number : '1.2-2'}}</div>
+      <div class="mat-cell">${{total[orderItem.product.id] | number : '1.2-2'}}</div>
       <div class="mat-cell text-center">
         <div class="p-1">
-          <button mat-mini-fab color="warn" (click)="remove(product)" matTooltip="Clear">
+          <button mat-mini-fab color="warn" (click)="remove(orderItem)" matTooltip="Clear">
               <mat-icon>close</mat-icon>
           </button>
         </div>

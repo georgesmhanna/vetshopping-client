@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {MatSnackBar} from '@angular/material';
-import {Category, Product} from './app.models';
+import {Category, OrderItem, Product} from './app.models';
 import {environment} from '../environments/environment';
 import Strapi from 'strapi-sdk-javascript/build/module/lib/sdk';
 
@@ -10,7 +10,7 @@ export class Data {
     constructor(public categories: Category[],
                 public compareList: Product[],
                 public wishList: Product[],
-                public cartList: Product[],
+                public cartList: OrderItem[],
                 public totalPrice: number) {
     }
 }
@@ -72,19 +72,19 @@ export class AppService {
         this.snackBar.open(message, '×', {panelClass: [status], verticalPosition: 'top', duration: 3000});
     }
 
-    public addToCart(product: Product) {
+    public addToCart(orderItem: OrderItem) {
         let message, status;
-        if (this.Data.cartList.filter(item => item.id == product.id)[0]) {
-            message = 'The product ' + product.name + ' already added to cart.';
+        if (this.Data.cartList.filter(item => item.product.id == orderItem.product.id)[0]) {
+            message = 'The product ' + orderItem.product.name + ' already added to cart.';
             status = 'error';
         }
         else {
             this.Data.totalPrice = null;
-            this.Data.cartList.push(product);
-            this.Data.cartList.forEach(product => {
-                this.Data.totalPrice = this.Data.totalPrice + product.newPrice;
+            this.Data.cartList.push(orderItem);
+            this.Data.cartList.forEach(orderItem => {
+                this.Data.totalPrice = this.Data.totalPrice + orderItem.product.newPrice;
             });
-            message = 'The product ' + product.name + ' has been added to cart.';
+            message = 'The product ' + orderItem.product.name + ' has been added to cart.';
             status = 'success';
         }
         this.snackBar.open(message, '×', {panelClass: [status], verticalPosition: 'top', duration: 3000});

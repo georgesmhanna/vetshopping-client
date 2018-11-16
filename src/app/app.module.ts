@@ -35,6 +35,7 @@ import {AuthenticationService} from './services/authentication.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import {WishlistService} from './services/wishlist.service';
+import {CartService} from './services/cart.service';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import {WishlistService} from './services/wishlist.service';
     AppService,
     AuthenticationService,
       WishlistService,
+      CartService,
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
     { provide: MAT_MENU_SCROLL_STRATEGY, useFactory: menuScrollStrategy, deps: [Overlay] },
       { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
