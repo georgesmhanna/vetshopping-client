@@ -72,26 +72,10 @@ export class AppService {
         this.snackBar.open(message, '×', {panelClass: [status], verticalPosition: 'top', duration: 3000});
     }
 
-    public addToCart(orderItem: OrderItem) {
-        let message, status;
-        if (this.Data.cartList.filter(item => item.product.id == orderItem.product.id)[0]) {
-            message = 'The product ' + orderItem.product.name + ' already added to cart.';
-            status = 'error';
-        }
-        else {
-            this.Data.totalPrice = null;
-            this.Data.cartList.push(orderItem);
-            this.Data.cartList.forEach(orderItem => {
-                this.Data.totalPrice = this.Data.totalPrice + orderItem.product.newPrice;
-            });
-            message = 'The product ' + orderItem.product.name + ' has been added to cart.';
-            status = 'success';
-        }
-        this.snackBar.open(message, '×', {panelClass: [status], verticalPosition: 'top', duration: 3000});
-    }
+    public getBrands() {
+        // return  await this.strapi.getEntries('brands');
+        return this.http.get<any>(`${environment.apiUrl}/brands`);
 
-    public async getBrands() {
-        return  await this.strapi.getEntries('brands');
     }
 
     public async getCountries() {

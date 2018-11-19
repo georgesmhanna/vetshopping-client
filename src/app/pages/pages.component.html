@@ -75,13 +75,12 @@
                     <button mat-button [matMenuTriggerFor]="cartMenu" #cartMenuTrigger="matMenuTrigger"
                             class="flex-row-button">
                         <mat-icon class="mat-icon-lg">shopping_cart</mat-icon>
-                        <span *ngIf="appService.Data.cartList.length > 0" class="cart-items-count">{{appService.Data.cartList.length}}</span>
+                        <span *ngIf="cart && cart.orderItems && cart.orderItems.length > 0" class="cart-items-count">{{cart.orderItems.length}}</span>
                         <div fxLayout="column" fxLayoutAlign="center center" fxShow="false" fxShow.gt-xs
                              class="top-cart">
                             <span>Shopping Cart</span>
-                            <span *ngIf="appService.Data.cartList.length > 0">{{appService.Data.cartList.length}} item<span
-                                    *ngIf="appService.Data.cartList.length > 1">s</span> -
-                                $<span>{{appService.Data.totalPrice | number : '1.2-2'}}</span>
+                            <span *ngIf="cart && cart.orderItems && cart.orderItems.length > 0">{{cart.orderItems.length}} item<span
+                                    *ngIf="cart.orderItems.length > 1">s</span>
                             </span>
                         </div>
                         <mat-icon class="mat-icon-sm">arrow_drop_down</mat-icon>
@@ -90,27 +89,27 @@
                               class="top-menu-dropdown cart-dropdown">
                         <span (mouseleave)="cartMenuTrigger.closeMenu()" class="d-block">
                             <div fxLayout="row" fxLayoutAlign="space-between center" class="text-muted">
-                                <b><span>{{appService.Data.cartList.length}} ITEM<span
-                                        *ngIf="appService.Data.cartList.length > 1">S</span></span></b>
+                                <b><span>{{cart?.orderItems?.length}} ITEM<span
+                                        *ngIf="cart && cart.orderItems && cart.orderItems.length > 1">S</span></span></b>
                                 <b><a [routerLink]="['/cart']" class="text-muted">VIEW CART</a></b>
                             </div>
                             <div class="divider mt-1"></div>
-                            <div *ngIf="appService.Data.cartList.length == 0" class="py-1 text-muted text-center">You have no items in your shopping cart.</div>
-                            <mat-list>
-                                <mat-list-item *ngFor="let product of appService.Data.cartList">                                   
-                                    <h3 matLine class="text-muted"> {{product.name}} </h3>
+                            <!--<div *ngIf="!cart || (cart && cart.orderItems && cart.orderItems.length === 0)" class="py-1 text-muted text-center">You have no items in your shopping cart.</div>-->
+                            <mat-list *ngIf="cart">
+                                <mat-list-item *ngFor="let orderItem of cart.orderItems">
+                                    <h3 matLine class="text-muted"> {{orderItem?.product?.name}} </h3>
                                     <p matLine class="text-muted">
-                                        <span> 1 x ${{product.newPrice | number : '1.2-2'}} </span>
+                                        <span> 1 x ${{orderItem?.product?.newPrice | number : '1.2-2'}} </span>
                                     </p>
-                                    <img [src]="apiUrl+product.images[0].url" alt="image">
+                                    <img [src]="apiUrl+orderItem.image" alt="image">
                                     <button mat-icon-button color="warn" class="remove"
-                                            (click)="remove(product);stopClickPropagate($event)" matTooltip="Remove"
+                                            (click)="remove(orderItem);stopClickPropagate($event)" matTooltip="Remove"
                                             matTooltipPosition="before">
                                         <mat-icon class="mat-icon-sm">close</mat-icon>
                                     </button>
                                 </mat-list-item>
                             </mat-list>
-                            <div *ngIf="appService.Data.cartList.length > 0" class="cart-dropdown-footer">
+                            <div *ngIf="false" class="cart-dropdown-footer">
                                 <div class="divider mt-1"></div>
                                 <div fxLayout="row" fxLayoutAlign="space-between center" class="text-muted mt-1">
                                     <b>TOTAL:</b>

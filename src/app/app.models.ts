@@ -39,22 +39,22 @@ export class User {
 }
 
 export class OrderItem {
+    image;
     constructor(
         public quantity: number,
         public product: Product,
         public color: any,
-        public size: any,
-        public cart: Cart,
-        public order: Order,
-        public image: string
-    ){}
+        public size: any
+    ) {
+    }
 }
 
 export class Cart {
     constructor(
         public orderItems: OrderItem[],
         public user: any
-    ){}
+    ) {
+    }
 }
 
 
@@ -63,5 +63,6 @@ export class Order {
         public orderItems: OrderItem[],
         public user: any,
         public orderNo: number
-    ){}
+    ) {
+    }
 }

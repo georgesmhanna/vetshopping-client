@@ -14,7 +14,7 @@
     </div>
 </div>
 <div fxLayout="row" fxLayout.xs="column" [fxLayoutAlign]="align" class="text-muted">
-    <div *ngIf="product?.availibilityCount > 0 && (type=='all' || type=='wish')">
+    <div *ngIf="product?.availibilityCount > 0 && (type=='all' || type=='wish') && insideCart">
         <span *ngIf="type!='wish'" class="fw-500">Quantity:</span> 
         <button mat-icon-button matTooltip="Remove" (click)="decrement()"><mat-icon>remove</mat-icon></button>
         <span> {{count}} </span>

@@ -14,9 +14,9 @@ import Strapi from 'strapi-sdk-javascript/build/main/lib/sdk';
 })
 export class ProductsComponent implements OnInit {
     @ViewChild('sidenav') sidenav: any;
-    public sidenavOpen: boolean = true;
-    public viewType: string = 'grid';
-    public viewCol: number = 25;
+    public sidenavOpen = true;
+    public viewType = 'grid';
+    public viewCol = 25;
     public counts = [12, 24, 36];
     public count: any;
     public sortings = ['Sort by Default', 'Lowest Price first', 'Highest Price first', 'Name A-Z', 'Name Z-A'];
@@ -27,7 +27,7 @@ export class ProductsComponent implements OnInit {
     public page: any;
     public apiUrl = environment.apiUrl;
     public currentCategory: any = {};
-    public productFilter : any= {};
+    public productFilter: any = {};
     private sub: any;
     private strapi = new Strapi(environment.apiUrl);
 
@@ -54,11 +54,11 @@ export class ProductsComponent implements OnInit {
         });
 
 
-        let colors: any = await this.strapi.getEntries('colors');
-        let sizes: any = await this.strapi.getEntries('sizes');
+        const colors: any = await this.strapi.getEntries('colors');
+        const sizes: any = await this.strapi.getEntries('sizes');
 
-        let colorNames = colors.map(x => x.name);
-        let sizeNames = sizes.map(x => x.name);
+        const colorNames = colors.map(x => x.name);
+        const sizeNames = sizes.map(x => x.name);
 
 
         this.productFilter = {
@@ -74,11 +74,11 @@ export class ProductsComponent implements OnInit {
     }
 
     public getAllProducts(search: string = '') {
-        if (this.categories) this.categories.forEach(c => c.selected = false);
+        if (this.categories) { this.categories.forEach(c => c.selected = false); }
         this.appService.getAllProducts().subscribe(data => {
             data.forEach(product => this.finalize(product));
             this.products = !search ? data : data.filter(product => product.name.toLowerCase().includes(search.toLowerCase()));
-            //for show more product
+            // for show more product
             // for (var index = 0; index < 3; index++) {
             //     this.products = this.products.concat(this.products);
             // }
@@ -97,8 +97,7 @@ export class ProductsComponent implements OnInit {
                 console.log('this category = ', this.currentCategory);
                 this.appService.Data.categories = data;
             });
-        }
-        else {
+        } else {
             this.categories = this.appService.Data.categories;
             this.categories.forEach(c => {
                 c.selected = this.currentCategory ? (c.id === this.currentCategory.id) : false;
@@ -107,11 +106,11 @@ export class ProductsComponent implements OnInit {
     }
 
     public getBrands() {
-        this.appService.getBrands().then((brands: any)=>{
+        this.appService.getBrands().subscribe((brands: any) => {
             console.log(`brandsssss`, brands);
-            brands.forEach(brand=>brand.image = environment.apiUrl+brand.image.url);
+            brands.forEach(brand => brand.image = environment.apiUrl + brand.image.url);
             this.brands = brands;
-            console.log(`brands: `,this.brands);
+            console.log(`brands: `, this.brands);
         });
     }
 
@@ -140,7 +139,7 @@ export class ProductsComponent implements OnInit {
     }
 
     public openProductDialog(product) {
-        let dialogRef = this.dialog.open(ProductDialogComponent, {
+        const dialogRef = this.dialog.open(ProductDialogComponent, {
             data: product,
             panelClass: 'product-dialog'
         });
@@ -153,7 +152,11 @@ export class ProductsComponent implements OnInit {
 
     public onPageChanged(event) {
         this.page = event;
-        this.getAllProducts();
+        if (this.currentCategory) {
+            this.getProductsByCategory(this.currentCategory);
+        } else {
+            this.getAllProducts();
+        }
         window.scrollTo(0, 0);
     }
 
@@ -172,9 +175,10 @@ export class ProductsComponent implements OnInit {
 
         return this.appService.getProductsByCategory(category.id).subscribe(data => {
             data.forEach(product => this.finalize(product));
-            this.products = !category.search ? data : data.filter(product => product.name.toLowerCase().includes(category.search.toLowerCase()));
+            this.products = !category.search ? data : data.filter(product =>
+                product.name.toLowerCase().includes(category.search.toLowerCase()));
             console.log('products by category: ', this.products);
-            //for show more product
+            // for show more product
             // for (var index = 0; index < 3; index++) {
             //     this.products = this.products.concat(this.products);
             // }

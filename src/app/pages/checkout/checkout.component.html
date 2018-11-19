@@ -36,16 +36,16 @@
               <mat-error *ngIf="billingForm.controls.phone.errors?.required">Phone is required</mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-sm="25" class="px-1">
-          <mat-form-field class="w-100">
-            <mat-select placeholder="Country" formControlName="country" required>
-              <mat-option *ngFor="let country of countries" [value]="country">
-                  {{country.name}}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="billingForm.controls.country.errors?.required">Country is required</mat-error>
-          </mat-form-field>
-        </div>
+        <!--<div fxFlex="100" fxFlex.gt-sm="25" class="px-1">-->
+          <!--<mat-form-field class="w-100">-->
+            <!--<mat-select placeholder="Country" formControlName="country" required>-->
+              <!--<mat-option *ngFor="let country of countries" [value]="country">-->
+                  <!--{{country.name}}-->
+              <!--</mat-option>-->
+            <!--</mat-select>-->
+            <!--<mat-error *ngIf="billingForm.controls.country.errors?.required">Country is required</mat-error>-->
+          <!--</mat-form-field>-->
+        <!--</div>-->
         <div fxFlex="100" fxFlex.gt-sm="25" class="px-1">
           <mat-form-field class="w-100">
               <input matInput placeholder="City" formControlName="city" required>
@@ -178,10 +178,10 @@
         <p class="text-muted">Phone:</p>
         <p>{{billingForm.controls.phone.value}}</p>
       </div>
-      <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
-        <p class="text-muted">Country:</p>
-        <p>{{billingForm.controls.country.value['name']}}</p>
-      </div>
+      <!--<div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">-->
+        <!--<p class="text-muted">Country:</p>-->
+        <!--<p>{{billingForm.controls.country.value['name']}}</p>-->
+      <!--</div>-->
       <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
         <p class="text-muted">City:</p>
         <p>{{billingForm.controls.city.value}}</p>
@@ -272,16 +272,16 @@
               <mat-error *ngIf="billingForm.controls.phone.errors?.required">Phone is required</mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-sm="25" class="px-1">
-          <mat-form-field class="w-100">
-            <mat-select placeholder="Country" formControlName="country" required>
-              <mat-option *ngFor="let country of countries" [value]="country">
-                  {{country.name}}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="billingForm.controls.country.errors?.required">Country is required</mat-error>
-          </mat-form-field>
-        </div>
+        <!--<div fxFlex="100" fxFlex.gt-sm="25" class="px-1">-->
+          <!--<mat-form-field class="w-100">-->
+            <!--<mat-select placeholder="Country" formControlName="country" required>-->
+              <!--<mat-option *ngFor="let country of countries" [value]="country">-->
+                  <!--{{country.name}}-->
+              <!--</mat-option>-->
+            <!--</mat-select>-->
+            <!--<mat-error *ngIf="billingForm.controls.country.errors?.required">Country is required</mat-error>-->
+          <!--</mat-form-field>-->
+        <!--</div>-->
         <div fxFlex="100" fxFlex.gt-sm="25" class="px-1">
           <mat-form-field class="w-100">
               <input matInput placeholder="City" formControlName="city" required>
@@ -414,10 +414,10 @@
         <p class="text-muted">Phone:</p>
         <p>{{billingForm.controls.phone.value}}</p>
       </div>
-      <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
-        <p class="text-muted">Country:</p>
-        <p>{{billingForm.controls.country.value['name']}}</p>
-      </div>
+      <!--<div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">-->
+        <!--<p class="text-muted">Country:</p>-->
+        <!--<p>{{billingForm.controls.country.value['name']}}</p>-->
+      <!--</div>-->
       <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
         <p class="text-muted">City:</p>
         <p>{{billingForm.controls.city.value}}</p>

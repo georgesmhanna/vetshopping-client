@@ -6,6 +6,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 import {WishlistService} from '../../services/wishlist.service';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {CartService} from '../../services/cart.service';
 
 @Component({
     selector: 'app-controls',
@@ -15,15 +16,23 @@ import {BehaviorSubject, Observable} from 'rxjs';
 export class ControlsComponent implements OnInit {
     @Input() product: Product;
     @Input() type: string;
-    @Input() count: number;
+    @Input() insideCart = false;
     @Output() onOpenProductDialog: EventEmitter<any> = new EventEmitter();
     @Output() onQuantityChange: EventEmitter<any> = new EventEmitter<any>();
-    // public count: number = 1;
+    public count = 1;
     public align = 'center center';
     private loggedIn: boolean;
-    private orderItem: OrderItem
+    private color: any;
+    private size: any;
 
-    constructor(public appService: AppService, public snackBar: MatSnackBar, private authService: AuthenticationService, private router: Router, private wishlistService: WishlistService) {
+    // private orderItem: OrderItem;
+
+    constructor(public appService: AppService,
+                public snackBar: MatSnackBar,
+                private authService: AuthenticationService,
+                private router: Router,
+                private wishlistService: WishlistService,
+                private cartService: CartService) {
     }
 
 
@@ -38,11 +47,9 @@ export class ControlsComponent implements OnInit {
     public layoutAlign() {
         if (this.type == 'all') {
             this.align = 'space-between center';
-        }
-        else if (this.type == 'wish') {
+        } else if (this.type == 'wish') {
             this.align = 'start center';
-        }
-        else {
+        } else {
             this.align = 'center center';
         }
     }
@@ -51,14 +58,13 @@ export class ControlsComponent implements OnInit {
     public increment(count) {
         if (this.count < this.product.availibilityCount) {
             this.count++;
-            let obj = {
+            const obj = {
                 productId: this.product.id,
                 soldQuantity: this.count,
                 total: this.count * this.product.newPrice
             };
             this.changeQuantity(obj);
-        }
-        else {
+        } else {
             this.snackBar.open('You can not choose more items than available. In stock ' + this.count + ' items.', '×', {
                 panelClass: 'error',
                 verticalPosition: 'top',
@@ -70,7 +76,7 @@ export class ControlsComponent implements OnInit {
     public decrement(count) {
         if (this.count > 1) {
             this.count--;
-            let obj = {
+            const obj = {
                 productId: this.product.id,
                 soldQuantity: this.count,
                 total: this.count * this.product.newPrice
@@ -84,7 +90,7 @@ export class ControlsComponent implements OnInit {
     }
 
     public addToWishList(product: Product) {
-        if(!this.loggedIn){
+        if (!this.loggedIn) {
             this.snackBar.open('You must be logged in to add items to wishlist', '×', {
                 panelClass: 'warning',
                 verticalPosition: 'top',
@@ -92,30 +98,68 @@ export class ControlsComponent implements OnInit {
             });
             this.router.navigate(['sign-in']);
             return;
-        }
-        else{
-            this.wishlistService.addToWishList(product).subscribe(response=>{
+        } else {
+            this.wishlistService.addToWishList(product).subscribe(response => {
                 this.snackBar.open('Product added successfully to wishlist', '×', {
                     panelClass: 'success',
                     verticalPosition: 'top',
                     duration: 3000
                 });
                 console.log(response);
-            }, err=>{
-                this.snackBar.open('Error: '+err, '×', {
+            }, err => {
+                this.snackBar.open('Error: ' + err, '×', {
                     panelClass: 'error',
                     verticalPosition: 'top',
                     duration: 3000
                 });
-            })
+            });
         }
     }
 
-    public addToCart(orderItem: OrderItem) {
-        console.log(`adding to cart product`, orderItem.product);
-        console.log(`adding to cart product with color`, orderItem.color);
-        console.log(`adding to cart product with size`, orderItem.size);
-        this.appService.addToCart(orderItem);
+    public addToCart(product: Product) {
+        console.log(`adding to cart product`, product);
+        console.log(`adding to cart product with color`, this.color);
+        console.log(`adding to cart product with size`, this.size);
+        if (product.colors && product.colors.length > 0 && !this.color) {
+            this.snackBar.open('You must select a color', '×', {
+                panelClass: 'warning',
+                verticalPosition: 'top',
+                duration: 3000
+            });
+            return;
+        }
+        if (product.sizes && product.sizes.length > 0 && !this.size) {
+            this.snackBar.open('You must select a size', '×', {
+                panelClass: 'warning',
+                verticalPosition: 'top',
+                duration: 3000
+            });
+            return;
+        }
+        if (!this.loggedIn) {
+            this.snackBar.open('You must be logged in to add items to cart', '×', {
+                panelClass: 'warning',
+                verticalPosition: 'top',
+                duration: 3000
+            });
+            this.router.navigate(['sign-in']);
+            return;
+        } else {
+            this.cartService.addToCart(new OrderItem(0, product, this.color, this.size)).subscribe(response => {
+                this.snackBar.open('Product added successfully to Cart', '×', {
+                    panelClass: 'success',
+                    verticalPosition: 'top',
+                    duration: 3000
+                });
+                console.log(response);
+            }, err => {
+                this.snackBar.open('Error: ' + err, '×', {
+                    panelClass: 'error',
+                    verticalPosition: 'top',
+                    duration: 3000
+                });
+            });
+        }
     }
 
     public openProductDialog(event) {
@@ -127,11 +171,11 @@ export class ControlsComponent implements OnInit {
     }
 
     onColorSelected($event: MatButtonToggleChange) {
-            this.orderItem.color = $event.value;
+        this.color = $event.value;
     }
 
     onSizeSelected($event: MatButtonToggleChange) {
 
-        this.orderItem.size = $event.value;
+        this.size = $event.value;
     }
 }

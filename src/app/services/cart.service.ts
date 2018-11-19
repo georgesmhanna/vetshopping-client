@@ -29,8 +29,8 @@ export class CartService {
         return this.http.post<any>(`${environment.apiUrl}/carts/addToCart`,
             {
                 productid: orderItem.product.id,
-                colorid: orderItem.color.id,
-                sizeid: orderItem.size.id,
+                colorid: orderItem.color ? orderItem.color.id : undefined,
+                sizeid: orderItem.size ? orderItem.size.id : undefined,
                 quantity: orderItem.quantity
             })
             .pipe(map(response => {
@@ -44,31 +44,34 @@ export class CartService {
         return this.http.post<any>(`${environment.apiUrl}/carts/removeFromCart`,
             {
                 productid: orderItem.product.id,
-                colorid: orderItem.color.id,
-                sizeid: orderItem.size.id
-            });
+                colorid: orderItem.color ? orderItem.color.id : undefined,
+                sizeid: orderItem.size ? orderItem.size.id : undefined,
+            }).pipe(map(response => {
+            console.log(`response remove from cart`, response);
+            this.cartSubject.next(response);
+            return response;
+        }));
     }
 
     private getCartByUserFromDb() {
-        console.log(`getting cart from db in cart service`);
+        console.log(`getting cart from db in cart service!!`);
         this.auth.getUser().subscribe(user => {
             this.user = user;
             try {
                 this.http.get<any>(`${environment.apiUrl}/carts?user=${this.user._id}`).subscribe(response => {
-                    let cart = response[0];
-                    cart.orderItems.forEach(oi=>{
-                        this.appService.getProductById(oi.product._id).subscribe(product=>{
+                    const cart = response[0];
+                    cart.orderItems.forEach(oi => {
+                        this.appService.getProductById(oi.product._id).subscribe(product => {
                             oi.product = product;
-                            this.cartSubject.next(response[0]);
-                        })
-                    })
+                            this.cartSubject.next(cart);
+                        });
+                    });
 
                     console.log('cart service --> cart: ', response[0]);
 
                 });
 
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(`error un getwishlist fro service, error: `, err);
                 this.cartSubject.next(null);
                 return null;

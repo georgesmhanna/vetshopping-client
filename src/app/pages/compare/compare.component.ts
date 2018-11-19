@@ -7,8 +7,7 @@ import { Data, AppService } from '../../app.service';
   styleUrls: ['./compare.component.scss']
 })
 export class CompareComponent implements OnInit {
-  
-  constructor(public appService:AppService) { }
+  constructor(public appService: AppService) { }
 
   ngOnInit() { }
 
@@ -16,14 +15,14 @@ export class CompareComponent implements OnInit {
       const index: number = this.appService.Data.compareList.indexOf(product);
       if (index !== -1) {
           this.appService.Data.compareList.splice(index, 1);
-      }        
+      }
   }
 
-  public clear(){
+  public clear() {
     this.appService.Data.compareList.length = 0;
   }
 
-  public addToCart(product){
-    this.appService.addToCart(product);
-  }
+  // public addToCart(product){
+  //   this.appService.addToCart(product);
+  // }
 }

@@ -129,6 +129,9 @@
                     <mat-chip-list *ngIf="product.discount">
                         <mat-chip color="warn" selected="true">{{product.discount}}% OFF</mat-chip>
                     </mat-chip-list>
+                    <mat-chip-list *ngIf="product && product.availibilityCount <= 0">
+                        <mat-chip color="warn" selected="true">Sold Out</mat-chip>
+                    </mat-chip-list>
                     <a [routerLink]="['/products', product.id, product.name]" class="image-link">
                         <img [src]="apiUrl+product.images[0]?.url" alt="" style="max-height: 185px;">
                     </a>

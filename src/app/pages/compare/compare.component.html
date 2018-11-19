@@ -92,7 +92,7 @@
         <button mat-raised-button color="warn" (click)="clear()">Clear All</button>
       </div>
       <div class="mat-cell" *ngFor="let product of appService.Data.compareList">
-        <button mat-raised-button color="primary" class="add" (click)="addToCart(product)">
+        <button mat-raised-button color="primary" class="add">
           <mat-icon>shopping_cart</mat-icon>Add to cart</button>
       </div>
     </div>

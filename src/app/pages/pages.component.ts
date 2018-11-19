@@ -9,6 +9,8 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/internal/operators';
 import {environment} from '../../environments/environment';
+import {CartService} from '../services/cart.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
     selector: 'app-pages',
@@ -17,7 +19,7 @@ import {environment} from '../../environments/environment';
     providers: [SidenavMenuService]
 })
 export class PagesComponent implements OnInit {
-    public showBackToTop: boolean = false;
+    public showBackToTop = false;
     public categories: Category[];
     public category: any;
     public sidenavMenuItems: Array<any>;
@@ -28,28 +30,40 @@ export class PagesComponent implements OnInit {
     products: any[];
     apiUrl = environment.apiUrl;
     public settings: Settings;
+    public cart;
 
     constructor(public appSettings: AppSettings,
                 public appService: AppService,
                 public sidenavMenuService: SidenavMenuService,
-                public router: Router) {
+                public router: Router,
+                public cartService: CartService,
+                public snackBar: MatSnackBar) {
         this.settings = this.appSettings.settings;
     }
 
     displayFn(product): string {
         return product ? product.name : product;
-    };
+    }
 
     async ngOnInit() {
         this.getCategories();
         this.sidenavMenuItems = this.sidenavMenuService.getSidenavMenuItems();
+        this.cartService.getCartByUser().subscribe(cart => {
+            if (!cart) {
+                return;
+            }
+            this.cart = cart;
+        });
+
+        this.category = {name: 'All Products'};
+        this.populateAutoComplete(true);
     }
 
     public getCategories() {
         this.appService.getCategories().subscribe(data => {
             data.forEach(c => c.parentId = c.parent ? c.parent.id : 0);
             this.categories = data;
-            this.category = data[0];
+            // this.category = data[0];
             this.appService.Data.categories = data;
             this.populateAutoComplete();
         });
@@ -60,8 +74,7 @@ export class PagesComponent implements OnInit {
         if (event && event.id) {
             this.category = this.categories.filter(category => category.id == event.id)[0];
             this.populateAutoComplete();
-        }
-        else if (event) {
+        } else if (event) {
             this.category = {name: 'All Products'};
             this.populateAutoComplete(true);
         }
@@ -70,17 +83,38 @@ export class PagesComponent implements OnInit {
         }
     }
 
-    public remove(product) {
-        const index: number = this.appService.Data.cartList.indexOf(product);
-        if (index !== -1) {
-            this.appService.Data.cartList.splice(index, 1);
-            this.appService.Data.totalPrice = this.appService.Data.totalPrice - product.newPrice;
+    public remove(orderItem) {
+        if (window.confirm('Are sure you want to remove this item from your shopping cart ?')) {
+            // put your delete method logic here
+            this.cartService.removeFromCart(orderItem).subscribe(response => {
+                this.snackBar.open('Product removed successfully from cart', '×', {
+                    panelClass: 'success',
+                    verticalPosition: 'top',
+                    duration: 3000
+                });
+                this.cart = response;
+
+                // this.calculateTotals();
+                // this.grandTotal = this.grandTotal - this.total[index].price;
+                // this.total.forEach(val => {
+                //     if (val == this.total[orderItem.product.id]) {
+                //         this.total[orderItem.product.id] = 0;
+                //     }
+                // });
+                // this.total = this.total.splice(index);
+            }, err => {
+                this.snackBar.open('Error: ' + err, '×', {
+                    panelClass: 'error',
+                    verticalPosition: 'top',
+                    duration: 3000
+                });
+            });
         }
     }
-
-    public clear() {
-        this.appService.Data.cartList.length = 0;
-    }
+    //
+    // public clear() {
+    //     this.appService.Data.cartList.length = 0;
+    // }
 
     public changeTheme(theme) {
         this.settings.theme = theme;
@@ -92,26 +126,23 @@ export class PagesComponent implements OnInit {
     }
 
     public search() {
-        let value = this.productCtrl.value;
+        const value = this.productCtrl.value;
         if (typeof value === 'string') {
             this.router.navigate(['/products', {name: this.category.name, id: this.category.id, search: value}]);
-        }
-        else if (value && value.name) {
+        } else if (value && value.name) {
             this.router.navigate(['/products', {name: this.category.name, id: this.category.id, search: value.name}]);
-        }
-        else {
+        } else {
             return;
         }
     }
 
     public scrollToTop() {
-        var scrollDuration = 200;
-        var scrollStep = -window.pageYOffset / (scrollDuration / 20);
-        var scrollInterval = setInterval(() => {
+        const scrollDuration = 200;
+        const scrollStep = -window.pageYOffset / (scrollDuration / 20);
+        const scrollInterval = setInterval(() => {
             if (window.pageYOffset != 0) {
                 window.scrollBy(0, scrollStep);
-            }
-            else {
+            } else {
                 clearInterval(scrollInterval);
             }
         }, 10);
@@ -143,7 +174,7 @@ export class PagesComponent implements OnInit {
     }
 
     openProduct(event) {
-        let product = event.option.value;
+        const product = event.option.value;
         this.router.navigate(['/products', product.id, product.name]);
     }
 
@@ -154,7 +185,7 @@ export class PagesComponent implements OnInit {
     }
 
     private populateAutoComplete(showAll: boolean = false) {
-        let sub$ = showAll ? this.appService.getAllProducts() : this.appService.getProductsByCategory(this.category.id);
+        const sub$ = showAll ? this.appService.getAllProducts() : this.appService.getProductsByCategory(this.category.id);
         sub$.subscribe(products => {
             this.products = products;
             this.filteredProducts = this.productCtrl.valueChanges

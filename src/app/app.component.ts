@@ -8,21 +8,21 @@ import { Settings, AppSettings } from './app.settings';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  loading: boolean = false;
+  loading = false;
   public settings: Settings;
-  constructor(public appSettings:AppSettings, public router: Router){
+  constructor(public appSettings: AppSettings, public router: Router) {
     this.settings = this.appSettings.settings;
   }
 
   ngOnInit() {
-   // this.router.navigate(['']);  //redirect other pages to homepage on browser refresh    
+   // this.router.navigate(['']);  //redirect other pages to homepage on browser refresh
   }
 
-  ngAfterViewInit(){
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-          window.scrollTo(0,0);
-      }
-    })  
+  ngAfterViewInit() {
+      this.router.events.subscribe(event => {
+          if (event instanceof NavigationEnd) {
+              window.scrollTo(0, 0);
+          }
+      });
   }
 }
