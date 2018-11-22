@@ -18,7 +18,7 @@ export class WishlistService {
     }
 
     public getWishlistByUser(): Observable<any> {
-        console.log(`wishlist service ==? getWishlistByUser`);
+        console.log(`wishlist service ==> getWishlistByUser`);
         return this.wishlistSubject.asObservable();
     }
 
@@ -40,16 +40,14 @@ export class WishlistService {
         this.auth.getUser().subscribe(user => {
             this.user = user;
             try {
-                this.http.get<any>(`${environment.apiUrl}/wishlists?user=${this.user._id}`).subscribe(response => {
-                    this.wishlistSubject.next(response[0]);
+                this.http.get<any>(`${environment.apiUrl}/wishlists/getCurrentWishlist`).subscribe(response => {
+                    this.wishlistSubject.next(response);
 
-                    console.log('wishlist service --> wishlist: ', response[0]);
+                    console.log('wishlist service --> wishlist: ', response);
 
                 });
-                // const wishlist =  await this.strapi.getEntries('wishlist', {user: this.user._id});
-                // return wishlist;
-            }
-            catch (err) {
+
+            } catch (err) {
                 console.log(`error un getwishlist fro service, error: `, err);
                 this.wishlistSubject.next(null);
                 return null;

@@ -58,6 +58,7 @@ export class CartComponent implements OnInit {
 
     public getTotalPrice(value, i) {
         if (value) {
+            this.cart.orderItems[i].quantity = value.soldQuantity;
             this.total[i].price = value.total;
             // this.total[value.productId] = value.total;
             this.grandTotal = 0;
@@ -109,4 +110,11 @@ export class CartComponent implements OnInit {
     //   this.appService.Data.cartList.length = 0;
     // }
 
+    checkout() {
+        // save quantities:
+        console.log('this.cart on checkout = ', this.cart);
+        // this.appService.Data.quantityList = this.cart.
+        this.appService.Data.cartList = this.cart;
+        this.router.navigate(['checkout']);
+    }
 }

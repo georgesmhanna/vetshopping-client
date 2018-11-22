@@ -54,6 +54,10 @@ export class AppService {
         return this.http.get<Product>(`${environment.apiUrl}/productsByCategory/${id}`);
     }
 
+    public getAddressByUser(): Observable<any> {
+        return this.http.get<any>(`${environment.apiUrl}/addresses/getCurrentAddress`);
+    }
+
     public getBanners(): Observable<any[]> {
         return this.http.get<any[]>(this.url + 'banners.json');
     }
@@ -63,8 +67,7 @@ export class AppService {
         if (this.Data.compareList.filter(item => item.id == product.id)[0]) {
             message = 'The product ' + product.name + ' already added to comparison list.';
             status = 'error';
-        }
-        else {
+        } else {
             this.Data.compareList.push(product);
             message = 'The product ' + product.name + ' has been added to comparison list.';
             status = 'success';

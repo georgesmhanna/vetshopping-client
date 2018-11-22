@@ -59,7 +59,9 @@
           <span class="new-price">${{ (grandTotal - (grandTotal*0.15)) | number : '1.2-2'}}</span>
         </div>
       </div>
-      <div class="mat-cell text-center"><a [routerLink]="['/checkout']" mat-raised-button color="primary">Proceed To Checkout</a></div>
+        <div class="mat-cell text-center">
+            <button type="button" mat-raised-button color="primary" (click)="checkout()">Proceed To Checkout</button>
+        </div>
     </div>
   </div>
 

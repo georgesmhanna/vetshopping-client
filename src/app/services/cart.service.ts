@@ -16,7 +16,7 @@ export class CartService {
     strapi = new Strapi(environment.apiUrl);
     cartSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-    constructor(private http: HttpClient, private auth: AuthenticationService, private appService: AppService) {
+    constructor(private http: HttpClient, private appService: AppService) {
         this.getCartByUserFromDb();
     }
 
@@ -36,6 +36,7 @@ export class CartService {
             .pipe(map(response => {
                 console.log(`response add to cart`, response);
                 this.cartSubject.next(response);
+                this.appService.Data.cartList = response;
                 return response;
             }));
     }
@@ -49,34 +50,29 @@ export class CartService {
             }).pipe(map(response => {
             console.log(`response remove from cart`, response);
             this.cartSubject.next(response);
+            this.appService.Data.cartList = response;
             return response;
         }));
     }
 
     private getCartByUserFromDb() {
-        console.log(`getting cart from db in cart service!!`);
-        this.auth.getUser().subscribe(user => {
-            this.user = user;
-            try {
-                this.http.get<any>(`${environment.apiUrl}/carts?user=${this.user._id}`).subscribe(response => {
-                    const cart = response[0];
-                    cart.orderItems.forEach(oi => {
-                        this.appService.getProductById(oi.product._id).subscribe(product => {
-                            oi.product = product;
-                            this.cartSubject.next(cart);
-                        });
-                    });
-
-                    console.log('cart service --> cart: ', response[0]);
-
-                });
-
-            } catch (err) {
-                console.log(`error un getwishlist fro service, error: `, err);
-                this.cartSubject.next(null);
-                return null;
-            }
-        });
+        console.log(`getting cart from db in cart service`);
+        try {
+            return this.http.get<any>(`${environment.apiUrl}/carts/getCurrentCart`).subscribe(cart => {
+                console.log('cart service --> cart: ', cart);
+                this.cartSubject.next(cart);
+                return cart;
+            });
+        } catch (err) {
+            console.log(`error in cart, error: `, err);
+            this.cartSubject.next(null);
+            return null;
+        }
     }
+
+    public getReloadedCart() {
+        return this.http.get<any>(`${environment.apiUrl}/carts/getCurrentCart`);
+    }
+
 
 }
