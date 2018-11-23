@@ -74,5 +74,13 @@ export class CartService {
         return this.http.get<any>(`${environment.apiUrl}/carts/getCurrentCart`);
     }
 
+    public removeUserCart() {
+        return this.http.delete<any>(`${environment.apiUrl}/carts/removeUserCart`).pipe(map(response => {
+            this.cartSubject.next({orderItems: []});
+            this.appService.Data.cartList = [];
+            return {orderItems: []};
+        }));
+    }
+
 
 }

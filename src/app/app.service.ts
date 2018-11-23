@@ -27,7 +27,8 @@ export class AppService {
     public url = 'assets/data/';
     public strapi = new Strapi(environment.apiUrl + '/');
 
-    constructor(public http: HttpClient, public snackBar: MatSnackBar) { }
+    constructor(public http: HttpClient, public snackBar: MatSnackBar) {
+    }
 
     public getCategories(): any {
         return this.http.get(environment.apiUrl + '/categories');
@@ -82,7 +83,7 @@ export class AppService {
     }
 
     public async getCountries() {
-        return await this.strapi.getEntries('countries');
+        return await this.strapi.getEntries('countries', {_limit: 300});
     }
 
 
@@ -109,9 +110,9 @@ export class AppService {
 
     public getDeliveryMethods() {
         return [
-            {value: 'free', name: 'Free Delivery', desc: '$0.00 / Delivery in 7 to 14 business Days'},
-            {value: 'standard', name: 'Standard Delivery', desc: '$7.99 / Delivery in 5 to 7 business Days'},
-            {value: 'express', name: 'Express Delivery', desc: '$29.99 / Delivery in 1 business Days'}
+            {value: 'free', name: 'Free Delivery', desc: '$0.00 / Delivery in 7 to 14 business Days', price: 0},
+            {value: 'standard', name: 'Standard Delivery', desc: '$7.99 / Delivery in 5 to 7 business Days', price: 7.99},
+            {value: 'express', name: 'Express Delivery', desc: '$29.99 / Delivery in 1 business Days', price: 29.99}
         ];
     }
 
@@ -127,6 +128,22 @@ export class AppService {
 
     public filterByPrice(price, type = 'lte') {
         return this.http.get<any>(`${environment.apiUrl}/products?newPrice._${type}=${price}`);
+    }
+
+    public placeOrder(order) {
+        return this.http.post<any>(`${environment.apiUrl}/orders`, order);
+    }
+
+    public getUserOrders() {
+        return this.http.get<any>(`${environment.apiUrl}/orders/getUserOrders`);
+    }
+
+    public getUserOrderById(id) {
+        return this.http.get<any>(`${environment.apiUrl}/orders/getUserOrders/${id}`);
+    }
+
+    public removeUserOrderById(id) {
+        return this.http.delete<any>(`${environment.apiUrl}/orders/removeUserOrderById/${id}`);
     }
 }
 

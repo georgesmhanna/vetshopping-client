@@ -31,7 +31,7 @@ export class AddressesComponent implements OnInit {
         this.user$ = this.auth.userSubject;
         this.auth.getUser().subscribe(user => {
             this.userId = user._id;
-            this.strapi.getEntries('addresses', {user: user._id}).then(addresses => {
+            this.strapi.getEntries('addresses', {user: user._id, _limit: 80000}).then(addresses => {
                 this.address = addresses[0];
                 this.strapi.getEntries('countries', {_limit: 300}).then(countries => {
                     this.countries = countries;

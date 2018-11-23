@@ -47,7 +47,7 @@ export class CartComponent implements OnInit {
             //     this.total.push({[orderItem.product.id]: orderItem.product.newPrice});
             this.total.push({
                 productId: orderItem.product.id,
-                price: orderItem.product.newPrice
+                price: orderItem.product.newPrice,
             });
             // else {
             //     this.total.push({[orderItem.product.id]: orderItem.product.newPrice});

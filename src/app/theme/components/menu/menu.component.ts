@@ -12,21 +12,21 @@ export class MenuComponent implements OnInit {
   constructor(private appService: AppService) { }
 
   categories: Array<Category>;
-  mainCategories : Array<Category>;
-  subCategories : Array<Category>;
+    mainCategories: Array<Category>;
+    subCategories: Array<Category>;
 
   ngOnInit() {
       this.getCategories();
   }
 
-  openMegaMenu(){
-    let pane = document.getElementsByClassName('cdk-overlay-pane');
+    openMegaMenu() {
+        const pane = document.getElementsByClassName('cdk-overlay-pane');
     [].forEach.call(pane, function (el) {
-        if(el.children.length > 0){
-          if(el.children[0].classList.contains('mega-menu')){
+        if (el.children.length > 0) {
+            if (el.children[0].classList.contains('mega-menu')) {
             el.classList.add('mega-menu-pane');
           }
-        }        
+        }
     });
   }
 
@@ -35,11 +35,8 @@ export class MenuComponent implements OnInit {
             this.appService.getCategories().subscribe(async data => {
                 for (const c of data) {
                     c.parentId = c.parent ? c.parent.id : 0;
-                    for (const sc of c.subCategories){
-                        // let a: any = await this.appService.strapi.getEntry('categories', sc.id);
-                        // console.log(`aa`, a);
-                        // console.log(`aaa`, a.subCategories);
-                        this.appService.getSubCategories(sc.id).subscribe(ssc=>{
+                    for (const sc of c.subCategories) {
+                        this.appService.getSubCategories(sc.id).subscribe(ssc => {
                             sc.subCategories = ssc;
                         });
                     }
@@ -51,7 +48,7 @@ export class MenuComponent implements OnInit {
                 }
                 this.categories = data;
                 this.appService.Data.categories = data;
-                this.mainCategories = this.categories.filter(c=>!c.parent);// && c.parent.name==='All Categories');
+                this.mainCategories = this.categories.filter(c => !c.parent); // && c.parent.name==='All Categories');
                 console.log(`categ menu `, this.categories);
 
             });

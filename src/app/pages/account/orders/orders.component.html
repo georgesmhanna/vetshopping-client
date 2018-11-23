@@ -7,16 +7,16 @@
       <div class="mat-header-cell"></div>
     </div>
     <div *ngFor="let order of orders" class="mat-row">
-      <div class="mat-cell"><span class="order">{{order.number}}</span></div>
-      <div class="mat-cell">{{order.date}}</div>
+        <div class="mat-cell"><span class="order">{{order.orderNo}}</span></div>
+        <div class="mat-cell">{{order.orderDate | date: 'medium'}}</div>
       <div class="mat-cell">{{order.status}}</div>
       <div class="mat-cell">{{order.total}}</div>     
       <div class="mat-cell">
-        <div class="p-1 actions">          
-          <button mat-mini-fab color="primary" matTooltip="View">
+          <div class="p-1 actions">
+              <button type="button" (click)="openOrder(order)" mat-mini-fab color="primary" matTooltip="View">
               <mat-icon>remove_red_eye</mat-icon>
           </button>
-          <button *ngIf="order.invoice" mat-mini-fab color="warn" matTooltip="View invoice" class="btn-invoice">
+              <button *ngIf="order.invoiceScan" mat-mini-fab color="warn" matTooltip="View invoice" class="btn-invoice">
               <mat-icon>receipt</mat-icon>
           </button>
         </div>

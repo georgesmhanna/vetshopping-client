@@ -13,7 +13,7 @@ export class WishlistService {
     strapi = new Strapi(environment.apiUrl);
     wishlistSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-    constructor(private http: HttpClient, private auth: AuthenticationService) {
+    constructor(private http: HttpClient) {
         this.getWishlistByUserFromDb();
     }
 
@@ -37,8 +37,6 @@ export class WishlistService {
 
     private getWishlistByUserFromDb() {
         console.log(`getting wishlist from db in wishlist service`);
-        this.auth.getUser().subscribe(user => {
-            this.user = user;
             try {
                 this.http.get<any>(`${environment.apiUrl}/wishlists/getCurrentWishlist`).subscribe(response => {
                     this.wishlistSubject.next(response);
@@ -52,6 +50,6 @@ export class WishlistService {
                 this.wishlistSubject.next(null);
                 return null;
             }
-        });
+
     }
 }

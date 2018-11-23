@@ -1,0 +1,118 @@
+<a type="button" color="primary" [routerLink]="['/account/orders']" mat-raised-button>
+    <mat-icon>arrow_back</mat-icon>
+    Back to Orders </a>
+<ng-container *ngIf="order">
+    <div fxLayout="row wrap">
+        <div fxFlex="100" class="p-1">
+            <h3 class="text-muted mt-2">Order information</h3>
+            <div class="divider"></div>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
+            <p class="text-muted">Order Number:</p>
+            <p>{{order.orderNo}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
+            <p class="text-muted">Order Date:</p>
+            <p>{{order.orderDate | date: 'medium'}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
+            <p class="text-muted">Status</p>
+            <p><b>{{order.status}}</b></p>
+        </div>
+    </div>
+    <div fxLayout="row wrap">
+        <div fxFlex="100" class="p-1">
+            <h3 class="text-muted">Order Items</h3>
+            <div class="divider"></div>
+            <div class="mat-table review-order-table">
+                <div class="mat-header-row">
+                    <div class="mat-header-cell">Product</div>
+                    <div class="mat-header-cell">Name</div>
+                    <div class="mat-header-cell">Unit Price</div>
+                    <div class="mat-header-cell">Quantity</div>
+                    <div class="mat-header-cell">Color</div>
+                    <div class="mat-header-cell text-center"></div>
+                    <div class="mat-header-cell">Total</div>
+                </div>
+                <ng-container *ngIf="order.cart && order.cart.orderItems && order.cart.orderItems.length > 0">
+                    <div *ngFor="let orderItem of order.cart.orderItems" class="mat-row">
+                        <div class="mat-cell"><img [src]="apiUrl + orderItem.image"></div>
+                        <div class="mat-cell">{{orderItem.product.name}}</div>
+                        <div class="mat-cell">${{orderItem.product.newPrice | number : '1.2-2'}}</div>
+                        <div class="mat-cell text-muted">{{orderItem.quantity}}</div>
+                        <div class="mat-cell">
+                            <mat-icon [style.background]="orderItem.color?.name"></mat-icon>
+                        </div>
+                        <div class="mat-cell">{{orderItem.size?.name || '-'}}</div>
+                        <div class="mat-cell">${{orderItem.product.newPrice * orderItem.quantity | number : '1.2-2'}}
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div fxLayout="row wrap">
+        <div fxFlex="100" class="p-1">
+            <h3 class="text-muted mt-2">Shipping information</h3>
+            <div class="divider"></div>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
+            <p class="text-muted">Name:</p>
+            <p>{{order.address.firstName}} {{order.address.lastName}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
+            <p class="text-muted">Phone:</p>
+            <p>{{order.address.phoneNumber}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
+            <p class="text-muted">Country:</p>
+            <p>{{order.address.country}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
+            <p class="text-muted">City:</p>
+            <p>{{order.address.city}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
+            <p class="text-muted">State:</p>
+            <p>{{order.address.stateProvince}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
+            <p class="text-muted">Zip/PostalCode:</p>
+            <p>{{order.address.zip}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
+            <p class="text-muted">Address:</p>
+            <p>{{order.address.addressLine}}</p>
+        </div>
+    </div>
+    <div fxLayout="row">
+        <div fxFlex="100" class="p-1">
+            <h3 class="text-muted mt-2">Delivery information</h3>
+            <div class="divider"></div>
+            <p class="py-1">{{order.deliveryMethod['name']}} <span
+                    class="text-muted">{{order.deliveryMethod['desc']}}</span>
+            </p>
+        </div>
+    </div>
+    <div fxLayout="row">
+        <div fxFlex="100" class="p-1">
+            <h3 class="text-muted mt-2">Payment information</h3>
+            <div class="divider"></div>
+            <p class="py-1"><span class="text-muted mr-1">Cash on Delivery</span></p>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" class="p-1">
+        <p><span class="text-muted mr-1">Subtotal:</span><span
+                *ngIf="order.subTotal">${{order.total  | number : '1.2-2'}}</span></p>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" class="p-1">
+        <p><span class="text-muted mr-1">Shipping:</span><span *ngIf="order.deliveryMethod">${{order.deliveryMethod.price  | number : '1.2-2'}}</span>
+        </p>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" class="p-1">
+        <h3><span class="text-muted mr-1">Total Price:</span><span
+                *ngIf="order.total">${{order.total  | number : '1.2-2'}}</span></h3>
+    </div>
+</ng-container>
+
+

@@ -1,4 +1,5 @@
-<mat-horizontal-stepper #horizontalStepper linear="true" class="mat-elevation-z2" fxShow="false" fxShow.gt-sm>
+<mat-horizontal-stepper *ngIf="billingForm && billingForm.controls" #horizontalStepper linear="true"
+                        class="mat-elevation-z2" fxShow="false" fxShow.gt-sm>
   <mat-step [stepControl]="billingForm" label="Billing address">
       <form [formGroup]="billingForm">
       <div fxLayout="row wrap">
@@ -72,7 +73,9 @@
   <mat-step [stepControl]="deliveryForm" label="Delivery method">
     <form [formGroup]="deliveryForm" class="p-2">
       <mat-radio-group formControlName="deliveryMethod" fxLayout="column" fxLayoutAlign="center" required name="methods">
-        <mat-radio-button *ngFor="let method of deliveryMethods" color="primary" [value]="method" class="mt-1"><b>{{method.name}}</b> {{method.desc}}</mat-radio-button>
+          <mat-radio-button *ngFor="let method of deliveryMethods" (change)="onDeliveryMethodSelected($event)"
+                            color="primary" [value]="method" class="mt-1"><b>{{method.name}}</b> {{method.desc}}
+          </mat-radio-button>
       </mat-radio-group>
         <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
         <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Back" matTooltipPosition="before" class="mr-1"><mat-icon>navigate_before</mat-icon></button>
@@ -167,7 +170,7 @@
     </div>
     <div fxLayout="row wrap">
       <div fxFlex="100" class="p-1">
-        <h3 class="text-muted mt-2">Billing information</h3>
+          <h3 class="text-muted mt-2">Shipping information</h3>
         <div class="divider"></div>
       </div>
       <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
@@ -214,27 +217,42 @@
       </div>
     </div>
         <div fxLayout="row" fxLayoutAlign="center center" class="p-1">
-            <h2><span class="text-muted mr-1">Total Price:</span><span>${{grandTotal | number : '1.2-2'}}</span></h2>
+            <h2><span class="text-muted mr-1">Total Price:</span><span *ngIf="deliveryMethod && grandTotal">${{grandTotal + deliveryMethod.price | number : '1.2-2'}}</span>
+            </h2>
     </div>
         <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
       <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Back" matTooltipPosition="before" class="mr-1"><mat-icon>navigate_before</mat-icon></button>
-            <button mat-raised-button matStepperNext color="primary" (click)="placeOrder()">Place order now</button>
+            <button mat-raised-button color="primary" type="button" [disabled]="disablePlaceOrderBtn"
+                    (click)="placeOrder()">Place order now
+            </button>
         </div>
   </mat-step>
-  <mat-step label="Confirmation">
-      <div fxLayout="column" fxLayoutAlign="center center" class="p-2 text-center">
+    <mat-step label="Confirmation">
+        <div fxLayout="column" fxLayoutAlign="center center" class="p-2 text-center" *ngIf="orderSuccessful">
       <button mat-fab color="primary"><mat-icon>check</mat-icon></button>
           <h2 class="py-2">Congratulations! Your order has been processed</h2>
       <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus dolor ante, ut luctus mi faucibus a. Ut eu tincidunt neque. Proin porttitor id ligula id placerat. Integer nec nulla varius, dapibus libero quis, semper eros. Aliquam erat volutpat. Proin volutpat tellus vel purus interdum euismod.</p>
     </div>
-      <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
+        <div fxLayout="column" *ngIf="!orderSuccessful" fxLayoutAlign="center center" class="p-2 text-center">
+            <button mat-fab color="primary">
+                <mat-icon>error</mat-icon>
+            </button>
+            <h2 class="py-2">There was a problem processing your order</h2>
+            <p class="text-muted">Please contact system administration by clicking on the button below, or try to <a
+                    [routerLink]="['/cart']">checkout again</a></p>
+            <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
+                <a [routerLink]="['/contact']" mat-raised-button color="primary">Contact us</a>
+            </div>
+        </div>
+        <div fxLayout="row" *ngIf="orderSuccessful" fxLayoutAlign="center center" class="mt-2 p-1">
           <a [routerLink]="['/']" mat-raised-button color="primary">Return to Shop</a>
     </div>
 
   </mat-step>
 </mat-horizontal-stepper>
 
-<mat-vertical-stepper #verticalStepper linear="true" class="mat-elevation-z2" fxHide="false" fxHide.gt-sm>
+<mat-vertical-stepper #verticalStepper linear="true" class="mat-elevation-z2" fxHide="false"
+                      *ngIf="billingForm && billingForm.controls" fxHide.gt-sm>
   <mat-step [stepControl]="billingForm" label="Billing address">
       <form [formGroup]="billingForm">
       <div fxLayout="row wrap">
@@ -403,7 +421,7 @@
     </div>
     <div fxLayout="row wrap">
       <div fxFlex="100" class="p-1">
-        <h3 class="text-muted mt-2">Billing information</h3>
+          <h3 class="text-muted mt-2">Shipping information</h3>
         <div class="divider"></div>
       </div>
       <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-1">
@@ -450,21 +468,41 @@
       </div>
     </div>
         <div fxLayout="row" fxLayoutAlign="center center" class="p-1">
-            <h2><span class="text-muted mr-1">Total Price:</span><span>${{grandTotal | number : '1.2-2'}}</span></h2>
+            <h2><span class="text-muted mr-1">Total Price:</span><span *ngIf="deliveryMethod && grandTotal">${{grandTotal + deliveryMethod.price | number : '1.2-2'}}</span>
+            </h2>
     </div>
         <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
       <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Back" matTooltipPosition="before" class="mr-1"><mat-icon>expand_less</mat-icon></button>
-            <button mat-raised-button matStepperNext color="primary" (click)="placeOrder()">Place order now</button>
+            <button mat-raised-button color="primary" type="button" [disabled]="disablePlaceOrderBtn"
+                    (click)="placeOrder()">Place order now
+            </button>
         </div>
   </mat-step>
-  <mat-step label="Confirmation">
-      <div fxLayout="column" fxLayoutAlign="center center" class="p-2 text-center">
-      <button mat-fab color="primary"><mat-icon>check</mat-icon></button>
-          <h2 class="py-2">Congratulations! Your order has been processed</h2>
-      <p class="text-muted lh">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus dolor ante, ut luctus mi faucibus a. Ut eu tincidunt neque. Proin porttitor id ligula id placerat. Integer nec nulla varius, dapibus libero quis, semper eros. Aliquam erat volutpat. Proin volutpat tellus vel purus interdum euismod.</p>
-    </div>
-      <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
-          <a [routerLink]="['/']" mat-raised-button color="primary">Return to Shop</a>
-      </div>
-  </mat-step>
+    <mat-step label="Confirmation">
+        <div fxLayout="column" fxLayoutAlign="center center" class="p-2 text-center" *ngIf="orderSuccessful">
+            <button mat-fab color="primary">
+                <mat-icon>check</mat-icon>
+            </button>
+            <h2 class="py-2">Congratulations! Your order has been processed</h2>
+            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus dolor ante, ut
+                luctus mi faucibus a. Ut eu tincidunt neque. Proin porttitor id ligula id placerat. Integer nec nulla
+                varius, dapibus libero quis, semper eros. Aliquam erat volutpat. Proin volutpat tellus vel purus
+                interdum euismod.</p>
+        </div>
+        <div fxLayout="column" *ngIf="!orderSuccessful" fxLayoutAlign="center center" class="p-2 text-center">
+            <button mat-fab color="primary">
+                <mat-icon>error</mat-icon>
+            </button>
+            <h2 class="py-2">There was a problem processing your order</h2>
+            <p class="text-muted">Please contact system administration by clicking on the button below, or try to <a
+                    [routerLink]="['/cart']">checkout again</a></p>
+            <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
+                <a [routerLink]="['/contact']" mat-raised-button color="primary">Contact us</a>
+            </div>
+        </div>
+        <div fxLayout="row" *ngIf="orderSuccessful" fxLayoutAlign="center center" class="mt-2 p-1">
+            <a [routerLink]="['/']" mat-raised-button color="primary">Return to Shop</a>
+        </div>
+
+    </mat-step>
 </mat-vertical-stepper>

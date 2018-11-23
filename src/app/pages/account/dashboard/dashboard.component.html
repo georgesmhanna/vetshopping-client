@@ -42,13 +42,13 @@ From your My Account Dashboard you have the ability to view a snapshot of your r
           <div class="divider"></div>
           <mat-card-content class="p-2 text-muted account-card-content">
             <p class="">Completed</p>
-            <mat-progress-bar value="75" color="primary"></mat-progress-bar>
+              <mat-progress-bar value="{{completed}}" color="primary"></mat-progress-bar>
             <p class="mt-1">Processing</p>
-            <mat-progress-bar value="25" color="accent"></mat-progress-bar>
-            <p class="mt-1">On hold</p>
-            <mat-progress-bar value="65" color="warn"></mat-progress-bar>
-            <p class="mt-1">Refunded</p>
-            <mat-progress-bar value="25" color="primary"></mat-progress-bar>
+              <mat-progress-bar value="{{processing}}" color="primary"></mat-progress-bar>
+              <p class="mt-1">On Hold</p>
+              <mat-progress-bar value="{{onHold}}" color="warn"></mat-progress-bar>
+              <p class="mt-1">Shipping</p>
+              <mat-progress-bar value="{{shipping}}" color="primary"></mat-progress-bar>
           </mat-card-content>
         </mat-card>
     </div>
