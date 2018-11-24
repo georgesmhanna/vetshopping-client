@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
-    private orders: any;
+    orders: any;
 
     // public orders = [
     //   { number: '#3258', date: 'March 29, 2018', status: 'Completed', total: '$140.00 for 2 items', invoice: true },

@@ -82,6 +82,10 @@ export class CheckoutComponent implements OnInit {
                     this.billingForm.controls['country'].setValue(this.countries.filter(x => x._id === address.country._id)[0]);
                 }
             });
+        }, err => {
+            this.appService.getCountries().then(countries => {
+                this.countries = countries;
+            });
         });
 
         this.months = this.appService.getMonths();
