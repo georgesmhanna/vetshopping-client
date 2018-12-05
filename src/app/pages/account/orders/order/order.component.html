@@ -103,7 +103,7 @@
     </div>
     <div fxLayout="row" fxLayoutAlign="center center" class="p-1">
         <p><span class="text-muted mr-1">Subtotal:</span><span
-                *ngIf="order.subTotal">${{order.total  | number : '1.2-2'}}</span></p>
+                *ngIf="order.subTotal">${{order.subTotal  | number : '1.2-2'}}</span></p>
     </div>
     <div fxLayout="row" fxLayoutAlign="center center" class="p-1">
         <p><span class="text-muted mr-1">Shipping:</span><span *ngIf="order.deliveryMethod">${{order.deliveryMethod.price  | number : '1.2-2'}}</span>

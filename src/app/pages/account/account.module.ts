@@ -9,19 +9,20 @@ import { InformationComponent } from './information/information.component';
 import { AddressesComponent } from './addresses/addresses.component';
 import { OrdersComponent } from './orders/orders.component';
 import {OrderComponent} from './orders/order/order.component';
+import {AuthGuard} from '../../guards/auth.guard';
 
 export const routes = [
-  { 
-      path: '', 
-      component: AccountComponent, children: [
-          { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-          { path: 'dashboard', component: DashboardComponent, data: {  breadcrumb: 'Dashboard' } },
-          { path: 'information', component: InformationComponent, data: {  breadcrumb: 'Information' } },
-          { path: 'addresses', component: AddressesComponent, data: {  breadcrumb: 'Addresses' } },
-          {path: 'orders', component: OrdersComponent, data: {breadcrumb: 'Orders'}},
-          {path: 'orders/:id', component: OrderComponent, data: {breadcrumb: 'Orders'}}
-      ]
-  }
+    {
+        path: '',
+        component: AccountComponent, children: [
+            {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+            {path: 'dashboard', component: DashboardComponent, data: {breadcrumb: 'Dashboard'}, canActivate: [AuthGuard]},
+            {path: 'information', component: InformationComponent, data: {breadcrumb: 'Information'}, canActivate: [AuthGuard]},
+            {path: 'addresses', component: AddressesComponent, data: {breadcrumb: 'Addresses'}, canActivate: [AuthGuard]},
+            {path: 'orders', component: OrdersComponent, data: {breadcrumb: 'Orders'}, canActivate: [AuthGuard]},
+            {path: 'orders/:id', component: OrderComponent, data: {breadcrumb: 'Orders'}, canActivate: [AuthGuard]}
+        ]
+    }
 ];
 
 @NgModule({
@@ -38,6 +39,7 @@ export const routes = [
     AddressesComponent,
       OrdersComponent,
       OrderComponent
-  ]
+  ],
+    providers: [AuthGuard]
 })
 export class AccountModule { }

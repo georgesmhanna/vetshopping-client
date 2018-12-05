@@ -66,7 +66,7 @@ export class AuthenticationService {
                     this.isLoginSubject.next(true);
                     this.userSubject.next(user);
                 }
-                console.log('logged in user: ', user);
+                // console.log('logged in user: ', user);
                 return user;
             }));
     }

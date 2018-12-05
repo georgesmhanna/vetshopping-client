@@ -38,7 +38,7 @@ export class ContactComponent implements OnInit {
 
     public onContactFormSubmit(values: any): void {
     if (this.contactForm.valid) {
-      console.log(values);
+        // console.log(values);
     }
     const email = {
       to: environment.contactSendToEmail,
@@ -51,7 +51,7 @@ export class ContactComponent implements OnInit {
     };
 
         this.appService.sendEmail(email).subscribe(() => {
-      console.log('email sent successfully');
+                // console.log('email sent successfully');
                 this.snackBar.open('Thank you for sending VetVillage a message. We will reply to you shortly.', '×', {
                     panelClass: 'success',
                     verticalPosition: 'top',

@@ -144,14 +144,12 @@ export class CheckoutComponent implements OnInit {
 
         this.appService.placeOrder(order).subscribe(createdOrder => {
             if (createdOrder) {
-                console.log(createdOrder);
                 this.onOrderCreationSuccessful(createdOrder);
                 // this.horizontalStepper._steps.forEach(step => step.editable = false);
                 // this.verticalStepper._steps.forEach(step => step.editable = false);
                 // this.appService.Data.cartList.length = 0;
             }
         }, err => {
-            console.log('error on order create: ', err);
             this.disablePlaceOrderBtn = false;
             this.orderSuccessful = false;
             this.snackBar.open('Error creating order: ' + err, '×', {
@@ -182,8 +180,7 @@ export class CheckoutComponent implements OnInit {
             };
 
             this.appService.sendEmail(emailToVillage).subscribe(() => {
-                console.log('email sent successfully');
-                // todo empty cart
+                // console.log('email sent successfully');
                 this.cartService.removeUserCart().subscribe(() => {
                     this.orderSuccessful = true;
                     this.horizontalStepper.next();
@@ -201,7 +198,6 @@ export class CheckoutComponent implements OnInit {
             });
 
             this.appService.sendEmail(emailToClient).subscribe(() => {
-                console.log('email sent successfully');
             });
 
         } catch (error) {
@@ -757,7 +753,7 @@ export const htmlFooter = (order) => {
                                                                                                                                                     <td valign="top"
                                                                                                                                                         style="padding:0px">
                                                                                                                                                         <a
-                                                                                                                                                                href="http://www.facebook.com/georgesmh"
+                                                                                                                                                                href="https://www.facebook.com/Vet-Village-310429006207153"
                                                                                                                                                                 target="_blank"
                                                                                                                                                                 class="imglink"><img
                                                                                                                                                                 src="https://images.chamaileon.io/5af430d4a0870300120192f8/1460562874_46-facebook.png"
@@ -774,44 +770,7 @@ export const htmlFooter = (order) => {
                                                                                                                                     </tr>
                                                                                                                                 </table>
                                                                                                                             </td>
-                                                                                                                            <td valign="top"
-                                                                                                                                width="99"
-                                                                                                                                style="padding:0px"
-                                                                                                                                class="c99p33n">
-                                                                                                                                <table cellpadding="0"
-                                                                                                                                       cellspacing="0"
-                                                                                                                                       width="100%">
-                                                                                                                                    <tr>
-                                                                                                                                        <td align="center"
-                                                                                                                                            style="padding:0px">
-                                                                                                                                            <table cellpadding="0"
-                                                                                                                                                   cellspacing="0"
-                                                                                                                                                   border="0"
-                                                                                                                                                   align="center"
-                                                                                                                                                   width="48"
-                                                                                                                                                   height="48"
-                                                                                                                                                   style="border:0px none;height:auto">
-                                                                                                                                                <tr>
-                                                                                                                                                    <td valign="top"
-                                                                                                                                                        style="padding:0px">
-                                                                                                                                                        <a
-                                                                                                                                                                href="http://www.twitter.com/georgesmhanna"
-                                                                                                                                                                target="_blank"
-                                                                                                                                                                class="imglink"><img
-                                                                                                                                                                src="https://images.chamaileon.io/5af430d4a0870300120192f8/1460562892_43-twitter.png"
-                                                                                                                                                                width="48"
-                                                                                                                                                                height="48"
-                                                                                                                                                                alt=""
-                                                                                                                                                                border="0"
-                                                                                                                                                                style="display:block"
-                                                                                                                                                                class="img48x48"/></a>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                            </table>
-                                                                                                                                        </td>
-                                                                                                                                    </tr>
-                                                                                                                                </table>
-                                                                                                                            </td>
+                                                                                                                           
                                                                                                                             <td valign="top"
                                                                                                                                 width="100"
                                                                                                                                 style="padding:0px"
@@ -833,7 +792,7 @@ export const htmlFooter = (order) => {
                                                                                                                                                     <td valign="top"
                                                                                                                                                         style="padding:0px">
                                                                                                                                                         <a
-                                                                                                                                                                href="https://www.instagram.com/george_mhanna"
+                                                                                                                                                                href="https://www.instagram.com/vetvillage"
                                                                                                                                                                 target="_blank"
                                                                                                                                                                 class="imglink"><img
                                                                                                                                                                 src="https://images.chamaileon.io/5af430d4a0870300120192f8/1460563170_78-instagram.png"
@@ -918,7 +877,7 @@ export const htmlFooter = (order) => {
                                                     <td valign="top" style="padding:10px">
                                                         <div style="text-align:left;font-family:Verdana, Geneva, sans-serif;font-size:13px;color:#000000;line-height:22px;mso-line-height:exactly;mso-text-raise:4px">
                                                             <p style="padding: 0; margin: 0;text-align: center;">©Vet
-                                                                Village, All rights reserved. Mansouriyye, Lebanon</p>
+                                                                Village, All rights reserved. Mansouriyyeh, Lebanon</p>
                                                             <p style="padding: 0; margin: 0;text-align: center;"></p>
                                                             <p
                                                                     style="padding: 0; margin: 0;text-align: center;">
@@ -926,7 +885,7 @@ export const htmlFooter = (order) => {
                                                             <p style="padding: 0; margin: 0;text-align: center;">
                                                                 &nbsp;</p>
                                                             <p style="padding: 0; margin: 0;text-align: center;"><a
-                                                                    href="https://vet.georgesmhanna.com" target="_blank"
+                                                                    href="https://vetvillage.net" target="_blank"
                                                                     style="color: #e94b3c !important; text-decoration: none !important;"
                                                                     class="nounderline"><font style=" color:#e94b3c;">Website</font></a>
                                                             </p></div>
@@ -1231,7 +1190,7 @@ export const htmlInitialClient = (order) => {
                     </td>
                     </tr>
                     </table>
-                    <table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#ffffff"  style="border:0px none;background-color:#ffffff"><tr><td valign="top"  style="padding:0px"><table cellpadding="0" cellspacing="0" width="100%"><tr><td  style="padding:0px"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td valign="top"  style="padding:10px"><div  style="text-align:left;font-family:Verdana, Geneva, sans-serif;font-size:15px;color:#000000;line-height:22px;mso-line-height:exactly;mso-text-raise:3px"><p style="padding: 0; margin: 0;text-align: center;">We've received your order and we'll ship it out <strong>as soon as possible.</strong></p><p style="padding: 0; margin: 0;text-align: center;">Please <a href="https://vet.georgesmhanna.com/contact" target="_blank"
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#ffffff"  style="border:0px none;background-color:#ffffff"><tr><td valign="top"  style="padding:0px"><table cellpadding="0" cellspacing="0" width="100%"><tr><td  style="padding:0px"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td valign="top"  style="padding:10px"><div  style="text-align:left;font-family:Verdana, Geneva, sans-serif;font-size:15px;color:#000000;line-height:22px;mso-line-height:exactly;mso-text-raise:3px"><p style="padding: 0; margin: 0;text-align: center;">We've received your order and we'll ship it out <strong>as soon as possible.</strong></p><p style="padding: 0; margin: 0;text-align: center;">Please <a href="https://vetvillage.net/contact" target="_blank"
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         style="color: #e94b3c !important; text-decoration: none !important;" class="nounderline"><font style=" color:#e94b3c;">contact us</font></a> if you have any questions.</p></div></td>
                     </tr>
                     </table>
@@ -1243,7 +1202,7 @@ export const htmlInitialClient = (order) => {
                     </table>
                     <table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#ffffff"  style="border:0px none;background-color:#ffffff"><tr><td valign="top"  style="padding:0px"><table cellpadding="0" cellspacing="0" width="100%"><tr><td  style="padding:0px"><table cellpadding="0" cellspacing="0" width="100%"><tr><td align="center"  style="padding:0px"><table cellpadding="0" cellspacing="0" border="0" align="center"  style="text-align:center;color:#000"><tr><td valign="top" align="center"  style="padding-top:10px;padding-right:10px;padding-bottom:30px;padding-left:10px"><table cellpadding="0" cellspacing="0" border="0" bgcolor="#00a591"  style="border:0px none;border-radius:5px;border-collapse:separate !important;background-color:#00a591"><tr><td valign="top" align="center"
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     style="padding:10px"><a
-                            href="https://vet.georgesmhanna.com/account/orders" target="_blank"  style="text-decoration:none" class="edm_button"><span  style="font-family:Verdana, Geneva, sans-serif;font-size:16px;color:#ffffff;line-height:16px;text-decoration:none"><span class="mso-font-fix-verdana">View order status</span></span>
+                            href="https://vetvillage.net/account/orders" target="_blank"  style="text-decoration:none" class="edm_button"><span  style="font-family:Verdana, Geneva, sans-serif;font-size:16px;color:#ffffff;line-height:16px;text-decoration:none"><span class="mso-font-fix-verdana">View order status</span></span>
                     </a></td>
                     </tr>
                     </table>

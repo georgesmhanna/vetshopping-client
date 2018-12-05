@@ -20,16 +20,16 @@ export class CartComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('inside ng on init');
+        // console.log('inside ng on init');
 
         this.cartService.getCartByUser().subscribe(cart => {
             if (!cart) {
                 return;
             }
             this.cart = cart;
-            console.log(`this.cart in cart component = `, this.cart);
+            // console.log(`this.cart in cart component = `, this.cart);
             this.calculateTotals();
-            console.log(`this.total = `, this.total);
+            // console.log(`this.total = `, this.total);
 
         });
         // this.appService.Data.cartList.forEach(orderItem=>{
@@ -112,7 +112,7 @@ export class CartComponent implements OnInit {
 
     checkout() {
         // save quantities:
-        console.log('this.cart on checkout = ', this.cart);
+        // console.log('this.cart on checkout = ', this.cart);
         // this.appService.Data.quantityList = this.cart.
         this.appService.Data.cartList = this.cart;
         this.router.navigate(['checkout']);

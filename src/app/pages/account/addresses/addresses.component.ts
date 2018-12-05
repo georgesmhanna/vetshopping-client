@@ -36,7 +36,7 @@ export class AddressesComponent implements OnInit {
                 this.strapi.getEntries('countries', {_limit: 300}).then(countries => {
                     this.countries = countries;
                     if (this.address && this.address.country) {
-                        console.log('address ', this.address);
+                        // console.log('address ', this.address);
                         this.billingForm = this.formBuilder.group({
                             'firstName': [this.address.firstName, Validators.required],
                             'lastName': ['', Validators.required],

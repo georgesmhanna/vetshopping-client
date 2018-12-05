@@ -55,11 +55,11 @@
                     <mat-error *ngIf="registerForm.controls.lastName.errors?.required">Last Name is required</mat-error>
                     <mat-error *ngIf="registerForm.controls.lastName.hasError('minlength')">Last Name isn't long enough, minimum of 1 characters</mat-error>
                 </mat-form-field>
-                <mat-form-field class="w-100 mt-2">
-                    <input matInput placeholder="Username" formControlName="username" required>
-                    <mat-error *ngIf="registerForm.controls.username.errors?.required">Username is required</mat-error>
-                    <mat-error *ngIf="registerForm.controls.username.hasError('minlength')">Username isn't long enough, minimum of 1 characters</mat-error>
-                </mat-form-field>
+                <!--<mat-form-field class="w-100 mt-2">-->
+                <!--<input matInput placeholder="Username" formControlName="username" required>-->
+                <!--<mat-error *ngIf="registerForm.controls.username.errors?.required">Username is required</mat-error>-->
+                <!--<mat-error *ngIf="registerForm.controls.username.hasError('minlength')">Username isn't long enough, minimum of 1 characters</mat-error>-->
+                <!--</mat-form-field>-->
                 <mat-form-field class="w-100 mt-1">
                     <input matInput placeholder="Email" formControlName="email" required>
                     <mat-error *ngIf="registerForm.controls.email.errors?.required">Email is required</mat-error>

@@ -110,9 +110,9 @@ export class AppService {
 
     public getDeliveryMethods() {
         return [
-            {value: 'free', name: 'Free Delivery', desc: '$0.00 / Delivery in 7 to 14 business Days', price: 0},
-            {value: 'standard', name: 'Standard Delivery', desc: '$7.99 / Delivery in 5 to 7 business Days', price: 7.99},
-            {value: 'express', name: 'Express Delivery', desc: '$29.99 / Delivery in 1 business Days', price: 29.99}
+            {value: 'free', name: 'Free Delivery', desc: '$0.00 / Delivery in up to 48 hours', price: 0},
+            // {value: 'standard', name: 'Standard Delivery', desc: '$7.99 / Delivery in 5 to 7 business Days', price: 7.99},
+            // {value: 'express', name: 'Express Delivery', desc: '$29.99 / Delivery in 1 business Days', price: 29.99}
         ];
     }
 

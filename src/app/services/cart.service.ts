@@ -21,7 +21,7 @@ export class CartService {
     }
 
     public getCartByUser(): Observable<any> {
-        console.log(`cart service ==? getCartByUser`);
+        // console.log(`cart service ==? getCartByUser`);
         return this.cartSubject.asObservable();
     }
 
@@ -34,7 +34,7 @@ export class CartService {
                 quantity: orderItem.quantity
             })
             .pipe(map(response => {
-                console.log(`response add to cart`, response);
+                // console.log(`response add to cart`, response);
                 this.cartSubject.next(response);
                 this.appService.Data.cartList = response;
                 return response;
@@ -48,7 +48,7 @@ export class CartService {
                 colorid: orderItem.color ? orderItem.color.id : undefined,
                 sizeid: orderItem.size ? orderItem.size.id : undefined,
             }).pipe(map(response => {
-            console.log(`response remove from cart`, response);
+            // console.log(`response remove from cart`, response);
             this.cartSubject.next(response);
             this.appService.Data.cartList = response;
             return response;
@@ -56,15 +56,15 @@ export class CartService {
     }
 
     private getCartByUserFromDb() {
-        console.log(`getting cart from db in cart service`);
+        // console.log(`getting cart from db in cart service`);
         try {
             return this.http.get<any>(`${environment.apiUrl}/carts/getCurrentCart`).subscribe(cart => {
-                console.log('cart service --> cart: ', cart);
+                // console.log('cart service --> cart: ', cart);
                 this.cartSubject.next(cart);
                 return cart;
             });
         } catch (err) {
-            console.log(`error in cart, error: `, err);
+            // console.log(`error in cart, error: `, err);
             this.cartSubject.next(null);
             return null;
         }

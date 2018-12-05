@@ -18,14 +18,14 @@ export class WishlistService {
     }
 
     public getWishlistByUser(): Observable<any> {
-        console.log(`wishlist service ==> getWishlistByUser`);
+        // console.log(`wishlist service ==> getWishlistByUser`);
         return this.wishlistSubject.asObservable();
     }
 
     public addToWishList(product: Product) {
         return this.http.post<any>(`${environment.apiUrl}/wishlists/addToWishlist`, {productid: product.id})
             .pipe(map(response => {
-                console.log(`response add to wishlist`, response);
+                // console.log(`response add to wishlist`, response);
                 this.wishlistSubject.next(response);
                 return response;
             }));
@@ -36,17 +36,17 @@ export class WishlistService {
     }
 
     private getWishlistByUserFromDb() {
-        console.log(`getting wishlist from db in wishlist service`);
+        // console.log(`getting wishlist from db in wishlist service`);
             try {
                 this.http.get<any>(`${environment.apiUrl}/wishlists/getCurrentWishlist`).subscribe(response => {
                     this.wishlistSubject.next(response);
 
-                    console.log('wishlist service --> wishlist: ', response);
+                    // console.log('wishlist service --> wishlist: ', response);
 
                 });
 
             } catch (err) {
-                console.log(`error un getwishlist fro service, error: `, err);
+                // console.log(`error un getwishlist fro service, error: `, err);
                 this.wishlistSubject.next(null);
                 return null;
             }

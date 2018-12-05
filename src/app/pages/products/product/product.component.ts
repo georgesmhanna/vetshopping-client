@@ -73,7 +73,7 @@ export class ProductComponent implements OnInit {
         // data.sizes = data.prices.map(p=>p.size);
         // data.listOfPrices = data.prices.map(p=>p.price);
         // data.newPrice = data.listOfPrices.sort()[0];
-        console.log(data);
+            // console.log(data);
       this.product = data;
             this.image = this.apiUrl + data.images[0].url;
             this.zoomImage = this.apiUrl + data.images[0].url;

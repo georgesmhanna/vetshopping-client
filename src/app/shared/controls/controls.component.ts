@@ -105,7 +105,7 @@ export class ControlsComponent implements OnInit {
                     verticalPosition: 'top',
                     duration: 3000
                 });
-                console.log(response);
+                // console.log(response);
             }, err => {
                 this.snackBar.open('Error: ' + err, '×', {
                     panelClass: 'error',
@@ -117,9 +117,9 @@ export class ControlsComponent implements OnInit {
     }
 
     public addToCart(product: Product) {
-        console.log(`adding to cart product`, product);
-        console.log(`adding to cart product with color`, this.color);
-        console.log(`adding to cart product with size`, this.size);
+        // console.log(`adding to cart product`, product);
+        // console.log(`adding to cart product with color`, this.color);
+        // console.log(`adding to cart product with size`, this.size);
         if (product.colors && product.colors.length > 0 && !this.color) {
             this.snackBar.open('You must select a color', '×', {
                 panelClass: 'warning',
@@ -151,7 +151,7 @@ export class ControlsComponent implements OnInit {
                     verticalPosition: 'top',
                     duration: 3000
                 });
-                console.log(response);
+                // console.log(response);
             }, err => {
                 this.snackBar.open('Error: ' + err, '×', {
                     panelClass: 'error',

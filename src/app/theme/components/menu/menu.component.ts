@@ -49,7 +49,7 @@ export class MenuComponent implements OnInit {
                 this.categories = data;
                 this.appService.Data.categories = data;
                 this.mainCategories = this.categories.filter(c => !c.parent); // && c.parent.name==='All Categories');
-                console.log(`categ menu `, this.categories);
+                // console.log(`categ menu `, this.categories);
 
             });
         // }

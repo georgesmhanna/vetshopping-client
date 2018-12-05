@@ -17,10 +17,10 @@ export class BrandsComponent implements OnInit {
 
   ngOnInit() {
       this.appService.getBrands().subscribe((brands: any) => {
-          console.log(`brandsssss`, brands);
+          // console.log(`brandsssss`, brands);
           brands.forEach(brand => brand.image = environment.apiUrl + brand.image.url);
           this.brands = brands;
-          console.log(`brands: `, this.brands);
+          // console.log(`brands: `, this.brands);
       });
     // this.brands.sort((a, b)=>{
     //   if(a.name < b.name) return -1;

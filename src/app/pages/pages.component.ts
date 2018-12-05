@@ -70,7 +70,7 @@ export class PagesComponent implements OnInit {
     }
 
     public changeCategory(event) {
-        console.log('in pages event is', event);
+        // console.log('in pages event is', event);
         if (event && event.id) {
             this.category = this.categories.filter(category => category.id == event.id)[0];
             this.populateAutoComplete();

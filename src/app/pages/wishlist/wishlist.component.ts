@@ -19,7 +19,7 @@ export class WishlistComponent implements OnInit {
 
   ngOnInit() {
     this.wishlistService.getWishlistByUser().subscribe(wishlist=>this.wishlist = wishlist);
-    console.log(`wishlist = `, this.wishlist)
+      // console.log(`wishlist = `, this.wishlist)
   }
 
   public remove(product) {

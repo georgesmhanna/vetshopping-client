@@ -93,8 +93,8 @@ export class ProductsComponent implements OnInit {
                     c.selected = this.currentCategory ? (c.id === this.currentCategory.id) : false;
                 });
                 this.categories = data;
-                console.log('this categories = ', this.categories);
-                console.log('this category = ', this.currentCategory);
+                // console.log('this categories = ', this.categories);
+                // console.log('this category = ', this.currentCategory);
                 this.appService.Data.categories = data;
             });
         } else {
@@ -107,10 +107,10 @@ export class ProductsComponent implements OnInit {
 
     public getBrands() {
         this.appService.getBrands().subscribe((brands: any) => {
-            console.log(`brandsssss`, brands);
+            // console.log(`brandsssss`, brands);
             brands.forEach(brand => brand.image = environment.apiUrl + brand.image.url);
             this.brands = brands;
-            console.log(`brands: `, this.brands);
+            // console.log(`brands: `, this.brands);
         });
     }
 
@@ -177,7 +177,7 @@ export class ProductsComponent implements OnInit {
             data.forEach(product => this.finalize(product));
             this.products = !category.search ? data : data.filter(product =>
                 product.name.toLowerCase().includes(category.search.toLowerCase()));
-            console.log('products by category: ', this.products);
+            // console.log('products by category: ', this.products);
             // for show more product
             // for (var index = 0; index < 3; index++) {
             //     this.products = this.products.concat(this.products);

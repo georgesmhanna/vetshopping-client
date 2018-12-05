@@ -11,11 +11,14 @@ import {environment} from '../../../environments/environment';
 export class HomeComponent implements OnInit {
 
   public slides = [
-    { title: 'The biggest sale', subtitle: 'Special for today', image: 'assets/images/carousel/banner1.jpg' },
-    { title: 'Summer collection', subtitle: 'New Arrivals On Sale', image: 'assets/images/carousel/banner2.jpg' },
-    { title: 'The biggest sale', subtitle: 'Special for today', image: 'assets/images/carousel/banner3.jpg' },
-    { title: 'Summer collection', subtitle: 'New Arrivals On Sale', image: 'assets/images/carousel/banner4.jpg' },
-    { title: 'The biggest sale', subtitle: 'Special for today', image: 'assets/images/carousel/banner5.jpg' }
+      {
+          title: 'Our clinic/shop is ready',
+          subtitle: 'Mansouriyye, Main Road, next to Wooden Bakery',
+          image: 'assets/images/carousel/banner1.jpg'
+      },
+      {title: 'Now Open', subtitle: 'From 9 AM to 7 PM', image: 'assets/images/carousel/banner2.jpg'},
+      {title: '24 Hours Counselling', subtitle: '71 35 61 55', image: 'assets/images/carousel/banner3.jpg'},
+      {title: 'Grooming', subtitle: 'Surgery, Dental Health, Home Visits', image: 'assets/images/carousel/banner4.jpg'},
   ];
 
   public brands = [];
@@ -70,10 +73,10 @@ export class HomeComponent implements OnInit {
 
   public getBrands() {
     this.appService.getBrands().subscribe((brands: any) => {
-      console.log(`brandsssss`, brands);
+        // console.log(`brandsssss`, brands);
       brands.forEach(brand => brand.image = environment.apiUrl + brand.image.url);
       this.brands = brands;
-      console.log(`brands: `, this.brands);
+        // console.log(`brands: `, this.brands);
     });
   }
 
