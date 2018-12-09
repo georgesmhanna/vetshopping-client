@@ -4,6 +4,7 @@ import {AuthenticationService} from '../../../services/authentication.service';
 import {faDog} from '@fortawesome/free-solid-svg-icons';
 import {Observable} from 'rxjs';
 import {WishlistService} from '../../../services/wishlist.service';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-top-menu',
@@ -26,7 +27,10 @@ export class TopMenuComponent implements OnInit {
     public wishlist$: Observable<any>;
     public faDog = faDog;
 
-    constructor(public appService: AppService, private authenticationService: AuthenticationService, private wishlistService: WishlistService) {
+    constructor(public appService: AppService,
+                private authenticationService: AuthenticationService,
+                private wishlistService: WishlistService,
+                private location: Location) {
         this.loggedIn$ = this.authenticationService.isLoggedIn();
         this.user$ = this.authenticationService.getUser();
         this.wishlist$ = this.wishlistService.getWishlistByUser();
@@ -43,5 +47,11 @@ export class TopMenuComponent implements OnInit {
 
     public changeLang(flag) {
         this.flag = flag;
+    }
+
+    signout() {
+        this.authenticationService.logout();
+        this.location.go('/sign-in');
+        location.reload();
     }
 }

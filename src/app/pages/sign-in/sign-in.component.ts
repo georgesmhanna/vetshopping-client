@@ -7,9 +7,8 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {first} from 'rxjs/internal/operators';
 import {User} from '../../app.models';
 import {AuthService, FacebookLoginProvider, GoogleLoginProvider} from 'angularx-social-login';
-import Strapi from 'strapi-sdk-javascript/build/main/lib/sdk';
 import {AppService} from '../../app.service';
-import {environment} from '../../../environments/environment';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -28,7 +27,8 @@ export class SignInComponent implements OnInit {
                 private authenticationService: AuthenticationService,
                 private route: ActivatedRoute,
                 private socialAuthenticationService: AuthService,
-                private appService: AppService) {
+                private appService: AppService,
+                private location: Location) {
     }
 
     ngOnInit() {
@@ -47,7 +47,7 @@ export class SignInComponent implements OnInit {
         }, {validator: matchingPasswords('password', 'confirmPassword')});
 
         // reset login status
-        this.authenticationService.logout();
+        // this.authenticationService.logout();
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -66,7 +66,8 @@ export class SignInComponent implements OnInit {
                         verticalPosition: 'top',
                         duration: 3000
                     });
-                    this.router.navigate(['/']);
+                    this.location.go('/');
+                    location.reload();
 
                 }, err => {
                     console.log('err: ', err);
@@ -122,9 +123,12 @@ export class SignInComponent implements OnInit {
                                 verticalPosition: 'top',
                                 duration: 3000
                             });
-                            this.router.navigate(['/']);
+                            this.location.go('/');
+                            location.reload();
+
                         }, err => {
-                            if (Array.isArray(err) && err.find(item => item.messages.find(message => message.id === 'Auth.form.error.email.taken'))) {
+                            if (Array.isArray(err) &&
+                                err.find(item => item.messages.find(message => message.id === 'Auth.form.error.email.taken'))) {
                                 this.snackBar.open('Please consider logging in using another provider', null, {
                                     panelClass: 'error',
                                     verticalPosition: 'top',

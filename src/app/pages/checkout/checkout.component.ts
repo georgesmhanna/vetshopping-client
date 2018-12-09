@@ -167,8 +167,8 @@ export class CheckoutComponent implements OnInit {
     private onOrderCreationSuccessful(order) {
         try {
             const emailToClient = {
-                to: environment.contactSendToEmail,
-                replyTo: order.user.email,
+                to: order.user.email,
+                replyTo: environment.contactSendToEmail,
                 subject: `Order Confirmation from VetVillage`,
                 html: htmlInitialClient(order) + htmlOrderItems(order) + htmlFooter(order)
             };
@@ -792,7 +792,7 @@ export const htmlFooter = (order) => {
                                                                                                                                                     <td valign="top"
                                                                                                                                                         style="padding:0px">
                                                                                                                                                         <a
-                                                                                                                                                                href="https://www.instagram.com/vetvillage"
+                                                                                                                                                                href="https://www.instagram.com/vetvillagelb"
                                                                                                                                                                 target="_blank"
                                                                                                                                                                 class="imglink"><img
                                                                                                                                                                 src="https://images.chamaileon.io/5af430d4a0870300120192f8/1460563170_78-instagram.png"
